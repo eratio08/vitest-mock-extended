@@ -1,14 +1,14 @@
 lockfileVersion: 5.4
 
 specifiers:
-  typescript: ^4.7.4
-  vitest: ^0.15.2
+  typescript: 4.7.4
+  vitest: 0.15.2
   vitest-mock-extended: link:..
 
 devDependencies:
   typescript: 4.7.4
   vitest: 0.15.2
-  vitest-mock-extended: 0.1.5_hk76dfjgq4m2v64gd3x7xejkua
+  vitest-mock-extended: link:..
 
 packages:
 
@@ -382,14 +382,6 @@ packages:
     engines: {node: '>=14.0.0'}
     dev: true
 
-  /ts-essentials/9.1.2_typescript@4.7.4:
-    resolution: {integrity: sha512-EaSmXsAhEiirrTY1Oaa7TSpei9dzuCuFPmjKRJRPamERYtfaGS8/KpOSbjergLz/Y76/aZlV9i/krgzsuWEBbg==}
-    peerDependencies:
-      typescript: '>=4.1.0'
-    dependencies:
-      typescript: 4.7.4
-    dev: true
-
   /type-detect/4.0.8:
     resolution: {integrity: sha512-0fr/mIH1dlO+x7TlcMy+bIDqKPsw/70tVyeHW787goQjhmqaZe10uwLujubK9q9Lg6Fiho1KUKDYz0Z7k7g5/g==}
     engines: {node: '>=4'}
@@ -423,17 +415,6 @@ packages:
       rollup: 2.75.7
     optionalDependencies:
       fsevents: 2.3.2
-    dev: true
-
-  /vitest-mock-extended/0.1.5_hk76dfjgq4m2v64gd3x7xejkua:
-    resolution: {integrity: sha512-1knebAACe10fQLYuvl6EsZuNdbT3LZe+GsF+Xfq3+WjeojIwtX9DhVeAAVxvO6StDuTUo/j5BwO1PYLuwUeQYw==}
-    peerDependencies:
-      typescript: 3.x || 4.x
-      vitest: 0.x
-    dependencies:
-      ts-essentials: 9.1.2_typescript@4.7.4
-      typescript: 4.7.4
-      vitest: 0.15.2
     dev: true
 
   /vitest/0.15.2:
