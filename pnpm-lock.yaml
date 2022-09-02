@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  c8: 7.12.0
+  '@vitest/coverage-c8': 0.22.1
   prettier: 2.7.1
   rimraf: 3.0.2
   ts-essentials: ^9.3.0
@@ -12,7 +12,7 @@ dependencies:
   ts-essentials: 9.3.0_typescript@4.8.2
 
 devDependencies:
-  c8: 7.12.0
+  '@vitest/coverage-c8': 0.22.1
   prettier: 2.7.1
   rimraf: 3.0.2
   typescript: 4.8.2
@@ -61,6 +61,23 @@ packages:
 
   /@types/node/17.0.44:
     resolution: {integrity: sha512-gWYiOlu6Y4oyLYBvsJAPlwHbC8H4tX+tLsHy6Ee976wedwwZKrG2hFl3Y/HiH6bIyLTbDWQexQF/ohwKkOpUCg==}
+    dev: true
+
+  /@vitest/coverage-c8/0.22.1:
+    resolution: {integrity: sha512-KOOYpO7EGpaF+nD8GD+Y05D0JtZp12NUu6DdLXvBPqSOPo2HkZ7KNBtfR0rb6gOy3NLtGiWTYTzCwhajgb2HlA==}
+    dependencies:
+      c8: 7.12.0
+      vitest: 0.22.1
+    transitivePeerDependencies:
+      - '@edge-runtime/vm'
+      - '@vitest/browser'
+      - '@vitest/ui'
+      - happy-dom
+      - jsdom
+      - less
+      - sass
+      - stylus
+      - supports-color
     dev: true
 
   /ansi-regex/5.0.1:
