@@ -47,6 +47,7 @@ type DeepMockProxyWithFuncPropSupport<T> = {
 
 interface MockOpts {
     deep?: boolean;
+    fallbackMockImplementation?: (...args: any[]) => any;
 }
 
 const mockClear = (mock: MockProxy<any>) => {
@@ -64,7 +65,7 @@ const mockClear = (mock: MockProxy<any>) => {
         }
     }
 
-    // This is a catch for if they pass in a jest.fn()
+    // This is a catch for if they pass in a vi.fn()
     if (!mock._isMockObject) {
         return mock.mockClear();
     }
@@ -84,18 +85,28 @@ const mockReset = (mock: MockProxy<any>) => {
         }
     }
 
-    // This is a catch for if they pass in a jest.fn()
-    // Worst case, we will create a jest.fn() (since this is a proxy)
+    // This is a catch for if they pass in a vi.fn()
+    // Worst case, we will create a vi.fn() (since this is a proxy)
     // below in the get and call mockReset on it
     if (!mock._isMockObject) {
         return mock.mockReset();
     }
 };
 
-function mockDeep<T>(opts: { funcPropSupport: true }, mockImplementation?: DeepPartial<T>): DeepMockProxyWithFuncPropSupport<T>;
+function mockDeep<T>(
+    opts: {
+        funcPropSupport?: true;
+        fallbackMockImplementation?: MockOpts['fallbackMockImplementation'];
+    },
+    mockImplementation?: DeepPartial<T>
+): DeepMockProxyWithFuncPropSupport<T>;
 function mockDeep<T>(mockImplementation?: DeepPartial<T>): DeepMockProxy<T>;
 function mockDeep(arg1: any, arg2?: any) {
-    return mock(arg1 && 'funcPropSupport' in arg1 ? arg2 : arg1, { deep: true });
+    const [opts, mockImplementation] =
+        typeof arg1 === 'object' && (typeof arg1.fallbackMockImplementation === 'function' || arg1.funcPropSupport === true)
+            ? [arg1, arg2]
+            : [{}, arg1];
+    return mock(mockImplementation, { deep: true, fallbackMockImplementation: opts.fallbackMockImplementation });
 }
 
 const overrideMockImp = (obj: DeepPartial<any>, opts?: MockOpts) => {
@@ -141,7 +152,7 @@ const handler = (opts?: MockOpts) => ({
             // check to see if this is a spy - which we want to say no to, but blindly returning
             // an proxy for calls results in the spy check returning true. This is another reason
             // why deep is opt in.
-            let fn = calledWithFn();
+            let fn = calledWithFn({ fallbackMockImplementation: opts?.fallbackMockImplementation });
             if (opts?.deep && property !== 'calls') {
                 // @ts-ignore
                 obj[property] = new Proxy<MockProxy<any>>(fn, handler(opts));
