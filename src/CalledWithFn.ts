@@ -17,7 +17,7 @@ function isVitestAsymmetricMatcher(obj: any): obj is VitestAsymmetricMatcher {
 const checkCalledWith = <T, Y extends any[]>(
     calledWithStack: CalledWithStackItem<T, Y>[],
     actualArgs: Y,
-    fallbackMockImplementation?: (...args: Y) => T
+    fallbackMockImplementation?: FallbackImplementation<Y, T>
 ): T => {
     const calledWithInstance = calledWithStack.find((instance) =>
         instance.args.every((matcher, i) => {
@@ -39,9 +39,10 @@ const checkCalledWith = <T, Y extends any[]>(
         : fallbackMockImplementation && fallbackMockImplementation(...actualArgs);
 };
 
-const calledWithFn = <T, Y extends any[]>({
-    fallbackMockImplementation,
-}: { fallbackMockImplementation?: (...args: Y) => T } = {}): CalledWithMock<T, Y> => {
+type FallbackImplementation<Y extends any[], T> = (...args: Y) => T;
+type CalledWithFnArgs<Y extends any[], T> = { fallbackMockImplementation?: FallbackImplementation<Y, T> };
+
+const calledWithFn = <T, Y extends any[]>({ fallbackMockImplementation }: CalledWithFnArgs<Y, T> = {}): CalledWithMock<T, Y> => {
     const fn: Mock<Y, T> = fallbackMockImplementation ? vi.fn(fallbackMockImplementation) : vi.fn();
     let calledWithStack: CalledWithStackItem<T, Y>[] = [];
 
@@ -50,7 +51,11 @@ const calledWithFn = <T, Y extends any[]>({
         // If that set of args is matched, we just call that vi.fn() for the result.
         const calledWithFn: Mock<Y, T> = fallbackMockImplementation ? vi.fn(fallbackMockImplementation) : vi.fn();
         const mockImplementation = fn.getMockImplementation();
-        if (!mockImplementation || mockImplementation === fallbackMockImplementation) {
+        if (
+            !mockImplementation ||
+            fn.getMockImplementation()?.name === 'implementation' ||
+            mockImplementation === fallbackMockImplementation
+        ) {
             // Our original function gets a mock implementation which handles the matching
             fn.mockImplementation((...args: Y) => checkCalledWith(calledWithStack, args, fallbackMockImplementation));
             calledWithStack = [];
