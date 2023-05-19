@@ -46,7 +46,7 @@
         "rollup": "^3.19.1",
         "rollup-plugin-dts": "^5.3.0",
         "rollup-plugin-esbuild": "^5.0.0",
-        "semantic-release": "^20.1.1",
+        "semantic-release": "^21.0.2",
         "typescript": "5.0.4",
         "vite": "^4.2.0",
         "vitest": "0.29.7"
