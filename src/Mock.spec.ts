@@ -259,7 +259,7 @@ describe('vitest-mock-extended', () => {
       mockObj.getSomethingWithMoreArgs.calledWith(anyNumber(), expect.anything(), 3).mockReturnValue(4)
 
       expect(mockObj.getSomethingWithMoreArgs(1, 2, 3)).toBe(4)
-      expect(mockObj.getSomethingWithMoreArgs(1, 2, 4)).toBeUndefined
+      expect(mockObj.getSomethingWithMoreArgs(1, 2, 4)).toBeUndefined()
     })
 
     test('Can use calledWith with an other mock', () => {
@@ -669,7 +669,7 @@ describe('vitest-mock-extended', () => {
       const stringified = JSON.stringify(mocked)
 
       //then
-      expect(stringified).toBeUndefined
+      expect(stringified).toBeUndefined()
     })
 
     it('should stricktly equal after stringify', () => {
