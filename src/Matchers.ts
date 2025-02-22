@@ -1,7 +1,15 @@
 type MatcherFn<T> = (actualValue: T) => boolean
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+interface MatcherLike<T> {
+  asymmetricMatch(other: unknown): boolean
+  toString(): string
+  getExpectedType?(): string
+  toAsymmetricMatcher?(): string
+}
+
 // needs to be a class so we can instanceof
-class Matcher<T> {
+class Matcher<T> implements MatcherLike<T> {
   $$typeof: symbol
   inverse?: boolean
 
@@ -58,7 +66,7 @@ interface MatcherCreator<T, E = T> {
   (expectedValue?: E): Matcher<T>
 }
 
-type MatchersOrLiterals<Y extends unknown[]> = { [K in keyof Y]: Matcher<Y[K]> | Y[K] }
+type MatchersOrLiterals<Y extends unknown[]> = { [K in keyof Y]: MatcherLike<Y[K]> | Y[K] }
 
 const any: MatcherCreator<unknown> = () => new Matcher(() => true, 'any()')
 const anyBoolean: MatcherCreator<boolean> = () => new Matcher((actualValue: boolean) => typeof actualValue === 'boolean', 'anyBoolean()')
@@ -123,4 +131,4 @@ export {
   captor,
   matches,
 }
-export type { MatcherFn, MatchersOrLiterals, MatcherCreator }
+export type { MatcherFn, MatchersOrLiterals, MatcherCreator, MatcherLike }

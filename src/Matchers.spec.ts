@@ -22,6 +22,7 @@ import {
   matches,
 } from './Matchers'
 import { beforeEach, vi, describe, test, expect } from 'vitest'
+import { mock } from './Mock'
 
 class Cls { }
 
@@ -516,6 +517,21 @@ describe('Matchers', () => {
 
       expect(argCaptor.value).toBe('3')
       expect(argCaptor.values).toEqual(['1', '2', '3'])
+    })
+
+    test('should allow captor as argument to calledWith', () => {
+      //given
+      interface MockInt {
+        getNumber: (n: number) => number
+      }
+      const mockObj = mock<MockInt>()
+      const argCaptor = captor()
+      mockObj.getNumber.calledWith(argCaptor).mockReturnValue(1)
+
+      //when
+      const result = mockObj.getNumber(2)
+      expect(result).toBe(1)
+      expect(argCaptor.value).toBe(2)
     })
   })
 

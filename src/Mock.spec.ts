@@ -118,6 +118,15 @@ describe('vitest-mock-extended', () => {
     expect(mockObj.getSomethingWithArgs).toBeCalledWith(1, 2)
   })
 
+  test('Can mock implementation of method', () => {
+    const mockObj = mock<MockInt>()
+    mockObj.getSomethingWithArgs.mockImplementation((arg1, arg2) => {
+      return arg1 + arg2
+    })
+
+    expect(mockObj.getSomethingWithArgs(1, 2)).toBe(3)
+  })
+
   test('Can specify calledWith', () => {
     const mockObj = mock<MockInt>()
     mockObj.getSomethingWithArgs.calledWith(1, 2).mockReturnValue(1)
