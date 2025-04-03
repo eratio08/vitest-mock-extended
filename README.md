@@ -159,7 +159,7 @@ expect(mockObj.deepProp(1)).toBe(3);
 expect(mockObj.deepProp.getNumber(1)).toBe(4);
 ```
 
-Can can provide a fallback mock implementation used if you do not define a return value using `calledWith`.
+You can also provide a fallback mock implementation to be used if you do not define a return value using `calledWith`.
 
 ```ts
 import { mockDeep } from 'jest-mock-extended';
@@ -169,6 +169,49 @@ const mockObj = mockDeep<Test1>({
     },
 });
 expect(() => mockObj.getNumber()).toThrowError('not mocked');
+```
+
+## Mocked Type Helpers
+If you mock objects/functions of modules and can't refer them directly due to hoist,
+mocked type helpers can be used. This is similar to the use case of Vitest's `vi.mocked`
+```ts
+// APIs
+import { mocked, mockedFn } from "vitest-mock-extended";
+import { originalObj, originalFn} from "somewhere";
+
+const mockedObj = mocked(originalObj);
+const deepMockedObj = mocked(originalObj, true);
+const mockedFunction = mockedFn(originalFn);
+```
+
+An example would be
+```ts
+// Mock a module
+// @/libs/example.mock.ts
+import { mock } from "vitest-mock-extended";
+import { ExampleClient } from "@/libs/example";
+
+vi.mock(import("@/libs/example"), async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    // Due to vi.mock being hoisted, we have to mock here directly instead of 
+    // defining an exampleMock outside and assign it to example
+    example: mock<ExampleClient>(),
+  };
+});
+
+// Use the mocked object
+import "@/libs/example.mock"; // Mock out the actual client
+import { mocked } from "vitest-mock-extended";
+import { example } from "@/libs/example";
+
+const exampleMock = mocked(example);
+
+test("send notification", () => {
+    example.function.mockResolvedValue(xxx);
+    ...
+}
 ```
 
 ## Available Matchers
