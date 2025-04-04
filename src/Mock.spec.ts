@@ -1,4 +1,4 @@
-import { mock, mockClear, mockDeep, mockReset, mockFn, VitestMockExtended } from './Mock'
+import { mock, mockClear, mockDeep, mockReset, mockFn, VitestMockExtended, mocked, mockedFn } from './Mock'
 import { anyNumber } from './Matchers'
 import { calledWithFn } from './CalledWithFn'
 import { MockProxy } from './Mock'
@@ -696,6 +696,34 @@ describe('vitest-mock-extended', () => {
 
       //when
       expect({ cookie: { domain: 'dummy' } }).toStrictEqual({ cookie })
+    })
+  })
+
+  describe('mock type utils', () => {
+    it('mocked should handle mock obj', () => {
+      const mockObj = mock<MockInt>()
+      const obj = mocked(mockObj)
+
+      expect(obj.getNumber).toHaveBeenCalledTimes(0)
+    })
+
+    it('mocked should handle mockDeep obj', () => {
+      const mockObj = mockDeep<Test6>({ funcPropSupport: true })
+      const input = new Test1(1)
+      mockObj.funcValueProp.nonDeepProp.calledWith(input).mockReturnValue(4)
+      const obj = mocked(mockObj, true)
+
+      expect(obj.funcValueProp.nonDeepProp(input)).toBe(4)
+    })
+
+    it('mockedFn should handle mockFn obj', async () => {
+      type MyFn = (x: number, y: number) => Promise<string>
+      const mockFunc = mockFn<MyFn>()
+      mockFunc.mockResolvedValue(`str`)
+
+      const obj = mockedFn(mockFunc)
+      const result: string = await obj(1, 2)
+      expect(result).toBe(`str`)
     })
   })
 })

@@ -205,6 +205,16 @@ const mockFn = <
   return calledWithFn()
 }
 
+function mocked<T>(obj: T, deep?: false): ReturnType<typeof mock<T>>
+function mocked<T>(obj: T, deep: true): ReturnType<typeof mockDeep<T>>
+function mocked<T>(obj: T, _deep?: boolean) {
+  return obj;
+}
+
+function mockedFn<T>(obj: T) {
+  return obj as ReturnType<typeof mockFn<T>>;
+}
+
 const stub = <T extends object>(): T => {
   return new Proxy<T>({} as T, {
     get: (obj, property: ProxiedProperty) => {
@@ -217,5 +227,5 @@ const stub = <T extends object>(): T => {
   })
 }
 
-export { mock, VitestMockExtended, mockClear, mockReset, mockDeep, mockFn, stub }
+export { mock, VitestMockExtended, mockClear, mockReset, mockDeep, mockFn, stub, mocked, mockedFn }
 export type { GlobalConfig, CalledWithMock, MockProxy, DeepMockProxy, MockOpts }
