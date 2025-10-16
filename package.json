@@ -50,7 +50,7 @@
         "rollup": "4.52.4",
         "rollup-plugin-dts": "6.2.3",
         "rollup-plugin-esbuild": "6.2.1",
-        "semantic-release": "24.2.9",
+        "semantic-release": "25.0.0",
         "typescript": "5.9.3",
         "typescript-eslint": "8.46.1",
         "vitest": "3.0.6"
