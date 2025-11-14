@@ -13,8 +13,8 @@ importers:
         version: 10.1.1(typescript@5.9.3)
     devDependencies:
       '@eslint/js':
-        specifier: 9.39.0
-        version: 9.39.0
+        specifier: 9.39.1
+        version: 9.39.1
       '@vitest/coverage-v8':
         specifier: 3.0.6
         version: 3.0.6(vitest@3.0.6)
@@ -437,6 +437,10 @@ packages:
 
   '@eslint/js@9.39.0':
     resolution: {integrity: sha512-BIhe0sW91JGPiaF1mOuPy5v8NflqfjIcDNpC+LbW9f609WVRX1rArrhi6Z2ymvrAry9jw+5POTj4t2t62o8Bmw==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@eslint/js@9.39.1':
+    resolution: {integrity: sha512-S26Stp4zCy88tH94QbBv3XCuzRQiZ9yXofEILmglYTh/Ug/a9/umqvgFtYBAo3Lp0nsI/5/qH1CCrbdK3AP1Tw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@eslint/object-schema@2.1.7':
@@ -2653,6 +2657,8 @@ snapshots:
       - supports-color
 
   '@eslint/js@9.39.0': {}
+
+  '@eslint/js@9.39.1': {}
 
   '@eslint/object-schema@2.1.7': {}
 
