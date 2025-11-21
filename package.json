@@ -46,7 +46,7 @@
         "esbuild": "0.27.0",
         "eslint": "9.39.1",
         "eslint-config-prettier": "10.1.8",
-        "rimraf": "6.1.0",
+        "rimraf": "6.1.2",
         "rollup": "4.53.3",
         "rollup-plugin-dts": "6.2.3",
         "rollup-plugin-esbuild": "6.2.1",
