@@ -20,7 +20,7 @@ jobs:
     steps:
       # https://github.com/marketplace/actions/checkout
       - name: Checkout Repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       # https://github.com/marketplace/actions/setup-pnpm
       - uses: pnpm/action-setup@v4.2.0
