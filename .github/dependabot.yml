@@ -7,14 +7,14 @@ updates:
       prefix: "chore: "
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "monthly"
 
   - package-ecosystem: "npm"
     directory: "/example"
     commit-message:
       prefix: "chore: "
     schedule:
-      interval: "daily"
+      interval: "monthly"
 
   - package-ecosystem: "github-actions"
     directory: "/"

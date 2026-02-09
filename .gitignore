@@ -5,3 +5,4 @@ lib/
 node_modules/
 example/src/*.js
 example/src/*.d.ts
+.DS_Store
