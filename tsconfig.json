@@ -11,10 +11,7 @@
         "strictNullChecks": true,
         "alwaysStrict": true,
         "allowJs": false,
-        "lib": [
-            "ES2022",
-            "DOM"
-        ],
+        "lib": ["ES2022", "DOM"],
         "target": "ES2022",
         "module": "ES2022",
         "moduleResolution": "Bundler",
@@ -22,14 +19,7 @@
         "outDir": "lib",
         "declarationDir": "lib/types"
     },
-    "files": [
-        "src/index.ts"
-    ],
-    "include": [
-        "src",
-        "**/*.mts"
-    ],
-    "exclude": [
-        "lib"
-    ]
+    "files": ["src/index.ts"],
+    "include": ["src", "**/*.mts"],
+    "exclude": ["lib"]
 }
