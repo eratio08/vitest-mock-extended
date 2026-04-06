@@ -28,6 +28,7 @@ const VitestMockExtended = {
   },
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: This is necessary to support any matcher that has an asymmetricMatch function, not just our own Matcher class.
 interface CalledWithMock<T, Y extends any[]> extends Mock<FallbackImplementation<Y, T>> {
   calledWith: (...args: Y | MatchersOrLiterals<Y>) => Mock<FallbackImplementation<Y, T>>
 }

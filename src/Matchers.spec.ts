@@ -488,10 +488,12 @@ describe('Matchers', () => {
 
   describe('captor', () => {
     let fn: () => void
+    // biome-ignore lint/suspicious/noExplicitAny: Captor is designed to capture any type of argument
     let doSomething: (...args: any[]) => void
 
     beforeEach(() => {
       fn = vi.fn()
+      // biome-ignore lint/suspicious/noExplicitAny: Arguments are intentionally typed as any to allow for flexible testing of the captor functionality
       doSomething = (fn: (...args: any[]) => void, count: number) => {
         fn(String(count), count, { 1: 2 })
       }
