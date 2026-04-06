@@ -1,30 +1,30 @@
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 import {
   any,
   anyArray,
   anyBoolean,
+  anyFunction,
+  anyMap,
   anyNumber,
   anyObject,
-  anyString,
-  anyMap,
   anySet,
-  isA,
-  arrayIncludes,
-  anyFunction,
+  anyString,
   anySymbol,
-  setHas,
+  arrayIncludes,
+  captor,
+  isA,
   mapHas,
-  objectContainsKey,
-  objectContainsValue,
+  matches,
+  notEmpty,
   notNull,
   notUndefined,
-  notEmpty,
-  captor,
-  matches,
+  objectContainsKey,
+  objectContainsValue,
+  setHas,
 } from './Matchers'
-import { beforeEach, vi, describe, test, expect } from 'vitest'
 import { mock } from './Mock'
 
-class Cls { }
+class Cls {}
 
 describe('Matchers', () => {
   describe('any', () => {
@@ -44,7 +44,7 @@ describe('Matchers', () => {
     //     const f = vi.fn();
     //     f(undefined);
 
-    //     // @ts-ignore
+    //     // @ts-expect-error
     //     console.info(f.mock);
 
     //     expect(f).toHaveBeenCalledWith(any());
@@ -132,7 +132,7 @@ describe('Matchers', () => {
 
   describe('anyFunction', () => {
     test('returns true for function', () => {
-      expect(anyFunction().asymmetricMatch(() => { })).toBe(true)
+      expect(anyFunction().asymmetricMatch(() => {})).toBe(true)
     })
 
     test('returns false for string', () => {

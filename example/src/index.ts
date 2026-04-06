@@ -1,4 +1,4 @@
-import { mockDeep, DeepMockProxy } from 'vitest-mock-extended'
+import { type DeepMockProxy, mockDeep } from 'vitest-mock-extended'
 
 type thing = {
   property: string

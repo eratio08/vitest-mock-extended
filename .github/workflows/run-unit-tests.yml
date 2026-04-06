@@ -37,12 +37,15 @@ jobs:
 
       - run: echo "${{ toJSON(env) }}"
 
-      - name: Build
-        run: pnpm build
+      - name: Type check
+        run: pnpm check
 
       - name: Lint
         run: pnpm lint
 
+        # We need to build before test to make the example project work
+      - name: Build
+        run: pnpm build
+
       - name: Unit-Tests
         run: pnpm test
-

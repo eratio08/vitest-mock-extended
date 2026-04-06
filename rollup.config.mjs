@@ -1,10 +1,10 @@
-import pkg from './package.json' with { type: "json" };
-import esbuild from 'rollup-plugin-esbuild';
-import { dts } from 'rollup-plugin-dts';
-import { defineConfig } from 'rollup';
+import { defineConfig } from 'rollup'
+import { dts } from 'rollup-plugin-dts'
+import esbuild from 'rollup-plugin-esbuild'
+import pkg from './package.json' with { type: 'json' }
 
 const external = [...Object.keys(pkg.dependencies), ...Object.keys(pkg.peerDependencies)]
-const input = "src/index.ts"
+const input = 'src/index.ts'
 
 const configs = [
   defineConfig({
@@ -26,7 +26,7 @@ const configs = [
         sourcemap: true,
       },
     ],
-    external
+    external,
   }),
   defineConfig({
     input,
@@ -43,8 +43,8 @@ const configs = [
         sourcemap: true,
       },
     ],
-    external
+    external,
   }),
-];
+]
 
-export default configs;
+export default configs

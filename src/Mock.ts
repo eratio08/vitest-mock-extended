@@ -1,8 +1,8 @@
+import type { DeepPartial } from 'ts-essentials'
+import { type Mock, vi } from 'vitest'
 import { calledWithFn } from './CalledWithFn'
-import { MatchersOrLiterals } from './Matchers'
-import { FallbackImplementation } from './types'
-import { DeepPartial } from 'ts-essentials'
-import { Mock, vi } from 'vitest'
+import type { MatchersOrLiterals } from './Matchers'
+import type { FallbackImplementation } from './types'
 
 type ProxiedProperty = string | number | symbol
 
@@ -51,7 +51,9 @@ type DeepMockProxy<T> = _DeepMockProxy<T> & T
 
 type _DeepMockProxyWithFuncPropSupport<T> = {
   // This supports deep mocks in the else branch
-  [K in keyof T]: T[K] extends (...args: infer A) => infer B ? CalledWithMock<B, A> & DeepMockProxy<T[K]> : DeepMockProxy<T[K]>
+  [K in keyof T]: T[K] extends (...args: infer A) => infer B
+    ? CalledWithMock<B, A> & DeepMockProxy<T[K]>
+    : DeepMockProxy<T[K]>
 }
 
 type DeepMockProxyWithFuncPropSupport<T> = _DeepMockProxyWithFuncPropSupport<T> & T
@@ -59,9 +61,11 @@ type DeepMockProxyWithFuncPropSupport<T> = _DeepMockProxyWithFuncPropSupport<T> 
 interface MockOpts {
   deep?: boolean
   useActualToJSON?: boolean
+  // biome-ignore lint/suspicious/noExplicitAny: This is necessary to support any matcher that has an asymmetricMatch function, not just our own Matcher class.
   fallbackMockImplementation?: (...args: any[]) => any
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: This is necessary to support any matcher that has an asymmetricMatch function, not just our own Matcher class.
 const mockClear = (mock: MockProxy<any>) => {
   for (const key of Object.keys(mock)) {
     const value = mock[key]
@@ -84,6 +88,7 @@ const mockClear = (mock: MockProxy<any>) => {
   }
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: This is necessary to support any matcher that has an asymmetricMatch function, not just our own Matcher class.
 const mockReset = (mock: MockProxy<any>) => {
   for (const key of Object.keys(mock)) {
     if (mock[key] === null || mock[key] === undefined) {
@@ -111,19 +116,21 @@ function mockDeep<T>(
     funcPropSupport?: true
     fallbackMockImplementation?: MockOpts['fallbackMockImplementation']
   },
-  mockImplementation?: DeepPartial<T>,
+  mockImplementation?: DeepPartial<T>
 ): DeepMockProxyWithFuncPropSupport<T>
 function mockDeep<T>(mockImplementation?: DeepPartial<T>): DeepMockProxy<T>
+// biome-ignore lint/suspicious/noExplicitAny: This is necessary to support any matcher that has an asymmetricMatch function, not just our own Matcher class.
 function mockDeep(arg1: any, arg2?: any) {
   const [opts, mockImplementation] =
-    typeof arg1 === 'object'
-      && (typeof arg1.fallbackMockImplementation === 'function' || arg1.funcPropSupport === true)
+    typeof arg1 === 'object' && (typeof arg1.fallbackMockImplementation === 'function' || arg1.funcPropSupport === true)
       ? [arg1, arg2]
       : [{}, arg1]
   return mock(mockImplementation, { deep: true, fallbackMockImplementation: opts.fallbackMockImplementation })
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: This is necessary to support any matcher that has an asymmetricMatch function, not just our own Matcher class.
 const overrideMockImp = (obj: DeepPartial<any>, opts?: MockOpts) => {
+  // biome-ignore lint/suspicious/noExplicitAny: This is necessary to support any matcher that has an asymmetricMatch function, not just our own Matcher class.
   const proxy = new Proxy<MockProxy<any>>(obj, handler(opts))
   for (const name of Object.keys(obj)) {
     if (typeof obj[name] === 'object' && obj[name] !== null) {
@@ -137,15 +144,18 @@ const overrideMockImp = (obj: DeepPartial<any>, opts?: MockOpts) => {
 }
 
 const handler = (opts?: MockOpts) => ({
+  // biome-ignore lint/suspicious/noExplicitAny: This is necessary to support any matcher that has an asymmetricMatch function, not just our own Matcher class.
   ownKeys(target: MockProxy<any>) {
     return Reflect.ownKeys(target)
   },
 
+  // biome-ignore lint/suspicious/noExplicitAny: This is necessary to support any matcher that has an asymmetricMatch function, not just our own Matcher class.
   set: (obj: MockProxy<any>, property: ProxiedProperty, value: any) => {
     obj[property] = value
     return true
   },
 
+  // biome-ignore lint/suspicious/noExplicitAny: This is necessary to support any matcher that has an asymmetricMatch function, not just our own Matcher class.
   get: (obj: MockProxy<any>, property: ProxiedProperty) => {
     if (!(property in obj)) {
       if (property === '_isMockObject' || property === '_isMockFunction') {
@@ -170,6 +180,7 @@ const handler = (opts?: MockOpts) => ({
       // why deep is opt in.
       const fn = calledWithFn({ fallbackMockImplementation: opts?.fallbackMockImplementation })
       if (opts?.deep && property !== 'calls') {
+        // biome-ignore lint/suspicious/noExplicitAny: This is necessary to support any matcher that has an asymmetricMatch function, not just our own Matcher class.
         obj[property] = new Proxy<MockProxy<any>>(fn, handler(opts))
         obj[property]._isMockObject = true
       } else {
@@ -189,16 +200,19 @@ const handler = (opts?: MockOpts) => ({
 
 const mock = <T, MockedReturn extends MockProxy<T> & T = MockProxy<T> & T>(
   mockImplementation: DeepPartial<T> = {} as DeepPartial<T>,
-  opts?: MockOpts,
+  opts?: MockOpts
 ): MockedReturn => {
   // @ts-expect-error private
+  // biome-ignore lint/style/noNonNullAssertion: We know this is defined since we set it on the object below, but the type definition for Proxy requires us to check it at runtime.
   mockImplementation!._isMockObject = true
   return overrideMockImp(mockImplementation, opts)
 }
 
 const mockFn = <
   T,
+  // biome-ignore lint/suspicious/noExplicitAny: This is necessary to support any matcher that has an asymmetricMatch function, not just our own Matcher class.
   A extends any[] = T extends (...args: infer AReal) => any ? AReal : any[],
+  // biome-ignore lint/suspicious/noExplicitAny: This is necessary to support any matcher that has an asymmetricMatch function, not just our own Matcher class.
   R = T extends (...args: any) => infer RReal ? RReal : any,
 >(): CalledWithMock<R, A> & T => {
   // @ts-expect-error hard to get this type right using any
@@ -208,11 +222,11 @@ const mockFn = <
 function mocked<T>(obj: T, deep?: false): ReturnType<typeof mock<T>>
 function mocked<T>(obj: T, deep: true): ReturnType<typeof mockDeep<T>>
 function mocked<T>(obj: T, _deep?: boolean) {
-  return obj;
+  return obj
 }
 
 function mockedFn<T>(obj: T) {
-  return obj as ReturnType<typeof mockFn<T>>;
+  return obj as ReturnType<typeof mockFn<T>>
 }
 
 const stub = <T extends object>(): T => {
@@ -227,5 +241,5 @@ const stub = <T extends object>(): T => {
   })
 }
 
-export { mock, VitestMockExtended, mockClear, mockReset, mockDeep, mockFn, stub, mocked, mockedFn }
-export type { GlobalConfig, CalledWithMock, MockProxy, DeepMockProxy, MockOpts }
+export type { CalledWithMock, DeepMockProxy, GlobalConfig, MockOpts, MockProxy }
+export { mock, mockClear, mockDeep, mocked, mockedFn, mockFn, mockReset, stub, VitestMockExtended }

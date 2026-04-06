@@ -1,8 +1,17 @@
-import { mock, mockClear, mockDeep, mockReset, mockFn, VitestMockExtended, mocked, mockedFn } from './Mock'
-import { anyNumber } from './Matchers'
+import { describe, expect, it, test, vi } from 'vitest'
 import { calledWithFn } from './CalledWithFn'
-import { MockProxy } from './Mock'
-import { expect, vi, describe, test, it } from 'vitest'
+import { anyNumber } from './Matchers'
+import {
+  type MockProxy,
+  mock,
+  mockClear,
+  mockDeep,
+  mocked,
+  mockedFn,
+  mockFn,
+  mockReset,
+  VitestMockExtended,
+} from './Mock'
 
 interface MockInt {
   id: number
@@ -16,6 +25,7 @@ interface MockInt {
 class Test1 implements MockInt {
   readonly id: number
   public deepProp: Test2 = new Test2()
+  //biome-ignore lint/correctness/noUnusedPrivateClassMembers: This is to test that private members do not interfere with the mock.
   private readonly anotherPart: number
 
   constructor(id: number) {
@@ -35,11 +45,11 @@ class Test1 implements MockInt {
     return this.id
   }
 
-  public getSomethingWithArgs(arg1: number, arg2: number) {
+  public getSomethingWithArgs(_arg1: number, _arg2: number) {
     return this.id
   }
 
-  public getSomethingWithMoreArgs(arg1: number, arg2: number, arg3: number) {
+  public getSomethingWithMoreArgs(_arg1: number, _arg2: number, _arg3: number) {
     return this.id
   }
 }
@@ -61,11 +71,13 @@ class Test3 {
     return num ^ 2
   }
 }
+
 class Test4 {
-  constructor(_test1: Test1, _int: MockInt) { }
+  // biome-ignore lint/complexity/noUselessConstructor: This is to test that we can use the mock in a constructor even if there are private members.
+  constructor(_test1: Test1, _int: MockInt) {}
 }
 
-export interface FunctionWithPropsMockInt {
+interface FunctionWithPropsMockInt {
   (arg1: number): number
 
   prop: number
@@ -75,7 +87,7 @@ export interface FunctionWithPropsMockInt {
   deepProp: Test2
 }
 
-export class Test6 {
+class Test6 {
   public id: number
   funcValueProp: FunctionWithPropsMockInt
 
@@ -150,7 +162,7 @@ describe('vitest-mock-extended', () => {
         fallbackMockImplementation: () => {
           throw new Error('not mocked')
         },
-      },
+      }
     )
 
     expect(() => mockObj.getSomethingWithArgs(1, 2)).toThrowError('not mocked')
@@ -200,7 +212,7 @@ describe('vitest-mock-extended', () => {
       const i1: MockProxy<MockInt> = mock<MockInt>()
 
       // no TS error
-      const f = new Test4(t1, i1)
+      new Test4(t1, i1)
     })
   })
 
@@ -399,7 +411,7 @@ describe('vitest-mock-extended', () => {
           getNumber: () => {
             return 150
           },
-        },
+        }
       )
 
       mockObj.deepProp.getAnotherString.calledWith('?').mockReturnValue('mocked')
@@ -493,8 +505,9 @@ describe('vitest-mock-extended', () => {
       const mockPromiseObj = Promise.resolve(42)
       const mockObj = mock<MockInt>()
       mockObj.id = 17
-      // @ts-expect-error as then is not defined on the MockInt type
-      mockObj.then = mockPromiseObj.then.bind(mockPromiseObj)
+      const thenableMockObj = mockObj as typeof mockObj & PromiseLike<number>
+      // biome-ignore lint/suspicious/noThenProperty: This is to test that we can mock a then function even though it is a common source of issues for mocks.
+      thenableMockObj.then = mockPromiseObj.then.bind(mockPromiseObj)
       const promiseMockObj = Promise.resolve(mockObj)
       await promiseMockObj
       await expect(promiseMockObj).resolves.toBeDefined()
@@ -642,7 +655,7 @@ describe('vitest-mock-extended', () => {
   describe('mock Date', () => {
     test('should call built-in date functions', () => {
       type objWithDate = { date: Date }
-      const unixTimestamp = Date.parse("15 Jan 2000 00:00:00 UTC")
+      const unixTimestamp = Date.parse('15 Jan 2000 00:00:00 UTC')
       const mockObj = mock<objWithDate>({ date: new Date(unixTimestamp) })
       expect(mockObj.date.getFullYear()).toBe(2000)
       expect(mockObj.date.getMonth()).toBe(0)
