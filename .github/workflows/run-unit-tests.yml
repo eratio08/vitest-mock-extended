@@ -19,7 +19,7 @@ jobs:
 
       # https://github.com/marketplace/actions/setup-pnpm
       - name: Install pnpm
-        uses: pnpm/action-setup@v6.0.6
+        uses: pnpm/action-setup@v6.0.8
         with:
           version: latest
           run_install: false
