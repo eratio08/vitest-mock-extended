@@ -8,6 +8,8 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    cooldown:
+      default-days: 7
 
   - package-ecosystem: "npm"
     directory: "/example"
@@ -15,6 +17,8 @@ updates:
       prefix: "chore: "
     schedule:
       interval: "monthly"
+    cooldown:
+      default-days: 7
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -22,3 +26,5 @@ updates:
       prefix: "chore: "
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 7
