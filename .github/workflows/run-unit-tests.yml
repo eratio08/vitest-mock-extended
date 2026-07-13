@@ -15,13 +15,13 @@ jobs:
     steps:
       # https://github.com/marketplace/actions/checkout
       - name: Checkout Repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.0
 
       # https://github.com/marketplace/actions/setup-pnpm
       - name: Install pnpm
         uses: pnpm/action-setup@v6.0.9
         with:
-          version: latest
+          version: 11.11.0
           run_install: false
 
       # https://github.com/marketplace/actions/setup-node-js-environment
