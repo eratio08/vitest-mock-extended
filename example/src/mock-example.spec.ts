@@ -1,5 +1,11 @@
 import { describe, expect, it, vi } from 'vitest'
-import { isMockObject, mock, mockDeep, mockFn } from 'vitest-mock-extended'
+import { isMockObject, mock, mockDeep, mockFn, type DeepMockProxy } from 'vitest-mock-extended'
+
+class ExampleClass {
+  method1() {
+    return 'test'
+  }
+}
 
 describe('Use mock example', () => {
   type SomeType = { fieldC: string }
@@ -39,6 +45,50 @@ describe('Use mock example', () => {
     repository.create.calledWith(expect.objectContaining({ data: value })).mockResolvedValue(value)
 
     expect(await repository.create({ data: value })).toBe(value)
+  })
+
+  it('should spy on a deep mock after accessing the method', () => {
+    const deepMockedClass: ExampleClass = mockDeep<ExampleClass>()
+    deepMockedClass.method1
+    const spy = vi.spyOn(deepMockedClass, 'method1')
+
+    deepMockedClass.method1()
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  it('should spy on a deep mock created from an instance', () => {
+    const deepMockedClass: ExampleClass = mockDeep(new ExampleClass())
+    const spy = vi.spyOn(deepMockedClass, 'method1')
+
+    deepMockedClass.method1()
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  it('should spy on an instance without mocking it', () => {
+    const instance = new ExampleClass()
+    const spy = vi.spyOn(instance, 'method1')
+
+    instance.method1()
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  it('should spy on a deep mock created from an implementation', () => {
+    const deepMockedClass: ExampleClass = mockDeep({ method1: () => 'test' })
+    const spy = vi.spyOn(deepMockedClass, 'method1')
+
+    deepMockedClass.method1()
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  it('should configure a deep mock through its typed proxy', () => {
+    const deepMockedClass: DeepMockProxy<ExampleClass> = mockDeep<ExampleClass>()
+    deepMockedClass.method1.mockReturnValue('test2')
+
+    expect(deepMockedClass.method1()).toBe('test2')
   })
 
   it('should add calledWith behavior to an existing Vitest mock', () => {
