@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest'
-import { mock, mockDeep } from 'vitest-mock-extended'
+import { describe, expect, it, vi } from 'vitest'
+import { isMockObject, mock, mockDeep, mockFn } from 'vitest-mock-extended'
 
 describe('Use mock example', () => {
   type SomeType = { fieldC: string }
@@ -20,5 +20,23 @@ describe('Use mock example', () => {
 
     expect(mockedInterface.fieldA).toBe('valueA')
     expect(mockedInterface.fieldB.fieldC).not.toBeNull() // returns spy function
+  })
+
+  it('should identify mock objects', () => {
+    const mockedInterface = mock<SomeInterface>()
+
+    expect(isMockObject(mockedInterface)).toBe(true)
+    expect(isMockObject({})).toBe(false)
+  })
+
+  it('should add calledWith behavior to an existing Vitest mock', () => {
+    const existingMock = vi.fn((value: string) => value.length > 0)
+    const configuredMock = mockFn(existingMock)
+
+    configuredMock.calledWith('value').mockReturnValue(false)
+
+    expect(configuredMock).toBe(existingMock)
+    expect(configuredMock('value')).toBe(false)
+    expect(configuredMock('other')).toBe(true)
   })
 })
