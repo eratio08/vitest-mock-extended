@@ -2,7 +2,7 @@ import type { DeepPartial } from 'ts-essentials'
 import { type Mock, vi } from 'vitest'
 import { calledWithFn } from './CalledWithFn'
 import type { MatchersOrLiterals } from './Matchers'
-import type { FallbackImplementation } from './types'
+import type { CalledWithImplementation, FallbackImplementation } from './types'
 
 type ProxiedProperty = string | number | symbol
 
@@ -215,9 +215,15 @@ const mockFn = <
   A extends any[] = T extends (...args: infer AReal) => any ? AReal : any[],
   // biome-ignore lint/suspicious/noExplicitAny: This is necessary to support any matcher that has an asymmetricMatch function, not just our own Matcher class.
   R = T extends (...args: any) => infer RReal ? RReal : any,
->(): CalledWithMock<R, A> & T => {
+>(
+  existingMock?: T
+): CalledWithMock<R, A> & T => {
+  if (existingMock !== undefined && !vi.isMockFunction(existingMock)) {
+    throw new TypeError('mockFn expects a Vitest mock function')
+  }
+
   // @ts-expect-error hard to get this type right using any
-  return calledWithFn()
+  return calledWithFn({ mock: existingMock as Mock<CalledWithImplementation<A, R>> })
 }
 
 const isMockObject = <T>(obj: T): obj is MockProxy<T> => {

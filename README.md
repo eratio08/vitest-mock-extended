@@ -117,6 +117,21 @@ const fn = mockFn<MyFn>();
 fn.calledWith(1, 2).mockReturnValue('str');
 ```
 
+To add the `calledWith` extension to a function created by Vitest's `vi.mock`, pass the existing mock to `mockFn`. The same Vitest mock is returned, so its call history and standard mock APIs are retained:
+
+```ts
+import { vi } from 'vitest';
+import { mockFn } from 'vitest-mock-extended';
+import { aFunction } from './someThingIWantToMock';
+
+vi.mock('./someThingIWantToMock');
+
+const mockedAFunction = mockFn(aFunction);
+mockedAFunction.calledWith('foobar').mockReturnValue(true);
+```
+
+This decorates an individual, already-imported Vitest mock. It does not mock a module or provide a `mockImportDeep` helper; use Vitest's `vi.mock` (and its factory/hoisting rules) to create the module mock first.
+
 ## Clearing / Resetting Mocks
 
 `vitest-mock-extended` exposes a mockClear and mockReset for resetting or clearing mocks with the same

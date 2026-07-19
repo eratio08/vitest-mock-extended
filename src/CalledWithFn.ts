@@ -45,16 +45,31 @@ const checkCalledWith = <T, Y extends any[]>(
 }
 
 // biome-ignore lint/suspicious/noExplicitAny: This is necessary to support any matcher that has an asymmetricMatch function, not just our own Matcher class.
-type CalledWithFnArgs<Y extends any[], T> = { fallbackMockImplementation?: FallbackImplementation<Y, T> }
+type CalledWithFnArgs<Y extends any[], T> = {
+  fallbackMockImplementation?: FallbackImplementation<Y, T>
+  mock?: Mock<CalledWithImplementation<Y, T>>
+}
+
+const decoratedMocks = new WeakMap<object, unknown>()
 
 // biome-ignore lint/suspicious/noExplicitAny: This is necessary to support any matcher that has an asymmetricMatch function, not just our own Matcher class.
 const calledWithFn = <T, Y extends any[]>({
   fallbackMockImplementation,
+  mock: existingMock,
 }: CalledWithFnArgs<Y, T> = {}): CalledWithMock<T, Y> => {
-  const fn: Mock<CalledWithImplementation<Y, T>> = fallbackMockImplementation
-    ? vi.fn(fallbackMockImplementation)
-    : vi.fn()
+  if (existingMock) {
+    const decoratedMock = decoratedMocks.get(existingMock as object)
+    if (decoratedMock) {
+      return decoratedMock as CalledWithMock<T, Y>
+    }
+  }
+
+  const fn: Mock<CalledWithImplementation<Y, T>> =
+    existingMock ?? (fallbackMockImplementation ? vi.fn(fallbackMockImplementation) : vi.fn())
+  const existingMockImplementation = existingMock?.getMockImplementation()
+  const effectiveFallbackMockImplementation = fallbackMockImplementation ?? existingMockImplementation
   let calledWithStack: CalledWithStackItem<T, Y>[] = []
+  let hasCalledWithImplementation = false
 
   ;(fn as CalledWithMock<T, Y>).calledWith = (...args) => {
     // We create new function to delegate any interactions (mockReturnValue etc.) to for this set of args.
@@ -64,20 +79,25 @@ const calledWithFn = <T, Y extends any[]>({
       : vi.fn()
     const mockImplementation = fn.getMockImplementation()
     if (
-      !mockImplementation ||
-      fn.getMockImplementation()?.name === 'implementation' ||
-      mockImplementation === fallbackMockImplementation
+      (existingMock && (!hasCalledWithImplementation || !mockImplementation)) ||
+      (!existingMock &&
+        (!mockImplementation ||
+          fn.getMockImplementation()?.name === 'implementation' ||
+          mockImplementation === fallbackMockImplementation))
     ) {
       // Our original function gets a mock implementation which handles the matching
-      fn.mockImplementation((...args: Y) => checkCalledWith(calledWithStack, args, fallbackMockImplementation))
+      fn.mockImplementation((...args: Y) => checkCalledWith(calledWithStack, args, effectiveFallbackMockImplementation))
       calledWithStack = []
+      hasCalledWithImplementation = true
     }
     calledWithStack.unshift({ args, calledWithFn })
 
     return calledWithFn
   }
 
-  return fn as CalledWithMock<T, Y>
+  const decoratedMock = fn as CalledWithMock<T, Y>
+  decoratedMocks.set(fn, decoratedMock)
+  return decoratedMock
 }
 
 export { calledWithFn }
