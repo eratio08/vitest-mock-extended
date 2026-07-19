@@ -220,6 +220,14 @@ const mockFn = <
   return calledWithFn()
 }
 
+const isMockObject = <T>(obj: T): obj is MockProxy<T> => {
+  if ((typeof obj !== 'object' || obj === null) && typeof obj !== 'function') {
+    return false
+  }
+
+  return '_isMockObject' in obj
+}
+
 function mocked<T>(obj: T, deep?: false): ReturnType<typeof mock<T>>
 function mocked<T>(obj: T, deep: true): ReturnType<typeof mockDeep<T>>
 function mocked<T>(obj: T, _deep?: boolean) {
@@ -243,4 +251,4 @@ const stub = <T extends object>(): T => {
 }
 
 export type { CalledWithMock, DeepMockProxy, GlobalConfig, MockOpts, MockProxy }
-export { mock, mockClear, mockDeep, mocked, mockedFn, mockFn, mockReset, stub, VitestMockExtended }
+export { isMockObject, mock, mockClear, mockDeep, mocked, mockedFn, mockFn, mockReset, stub, VitestMockExtended }

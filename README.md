@@ -184,6 +184,18 @@ const deepMockedObj = mocked(originalObj, true);
 const mockedFunction = mockedFn(originalFn);
 ```
 
+To detect whether a value was created by `mock()` or `mockDeep()`, use `isMockObject()`.
+It is safe to call with any value and narrows marked values to a `MockProxy`:
+
+```ts
+import { isMockObject, type MockProxy } from "vitest-mock-extended";
+
+const service: Service | MockProxy<Service> = getService();
+if (isMockObject(service)) {
+    service.request.mockReturnValue("mocked response");
+}
+```
+
 An example would be
 ```ts
 // Mock a module
@@ -195,7 +207,7 @@ vi.mock(import("@/libs/example"), async (importOriginal) => {
   const actual = await importOriginal();
   return {
     ...actual,
-    // Due to vi.mock being hoisted, we have to mock here directly instead of 
+    // Due to vi.mock being hoisted, we have to mock here directly instead of
     // defining an exampleMock outside and assign it to example
     example: mock<ExampleClient>(),
   };

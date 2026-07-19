@@ -37,7 +37,7 @@
         "build": "rolldown -c && tsc -p tsconfig.build.json"
     },
     "dependencies": {
-        "ts-essentials": "^10.1.1"
+        "ts-essentials": "^10.2.1"
     },
     "devDependencies": {
         "@biomejs/biome": "2.5.1",

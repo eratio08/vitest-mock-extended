@@ -2,6 +2,7 @@ import { describe, expect, it, test, vi } from 'vitest'
 import { calledWithFn } from './CalledWithFn'
 import { anyNumber } from './Matchers'
 import {
+  isMockObject,
   type MockProxy,
   mock,
   mockClear,
@@ -713,6 +714,32 @@ describe('vitest-mock-extended', () => {
   })
 
   describe('mock type utils', () => {
+    it('identifies mock objects and safely rejects other values', () => {
+      const mockObj = mock<MockInt>()
+      const deepMock = mockDeep<{ nested: MockInt }>()
+
+      expect(isMockObject(mockObj)).toBe(true)
+      expect(isMockObject(deepMock)).toBe(true)
+      expect(isMockObject(deepMock.nested)).toBe(true)
+      expect(isMockObject({ _isMockObject: true })).toBe(true)
+      expect(isMockObject({})).toBe(false)
+      expect(isMockObject(null)).toBe(false)
+      expect(isMockObject(undefined)).toBe(false)
+      expect(isMockObject('mock')).toBe(false)
+      expect(isMockObject(42)).toBe(false)
+      expect(isMockObject(vi.fn())).toBe(false)
+    })
+
+    it('narrows a value to a MockProxy', () => {
+      const value: MockInt = mock<MockInt>()
+
+      if (isMockObject(value)) {
+        const narrowed: MockProxy<MockInt> = value
+        narrowed.getNumber.mockReturnValue(42)
+        expect(narrowed.getNumber()).toBe(42)
+      }
+    })
+
     it('mocked should handle mock obj', () => {
       const mockObj = mock<MockInt>()
       const obj = mocked(mockObj)
