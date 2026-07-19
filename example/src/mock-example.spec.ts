@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { isMockObject, mock, mockDeep, mockFn, type DeepMockProxy } from 'vitest-mock-extended'
+import { type DeepMockProxy, isMockObject, mock, mockDeep, mockFn } from 'vitest-mock-extended'
 
 class ExampleClass {
   method1() {
