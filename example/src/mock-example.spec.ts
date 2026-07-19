@@ -29,6 +29,18 @@ describe('Use mock example', () => {
     expect(isMockObject({})).toBe(false)
   })
 
+  it('should match object arguments with objectContaining', async () => {
+    type Repository = {
+      create: (args: { data: SomeType }) => Promise<SomeType>
+    }
+    const repository = mockDeep<Repository>()
+    const value = { fieldC: 'valueC' }
+
+    repository.create.calledWith(expect.objectContaining({ data: value })).mockResolvedValue(value)
+
+    expect(await repository.create({ data: value })).toBe(value)
+  })
+
   it('should add calledWith behavior to an existing Vitest mock', () => {
     const existingMock = vi.fn((value: string) => value.length > 0)
     const configuredMock = mockFn(existingMock)
