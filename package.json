@@ -22,7 +22,7 @@
                 "default": "./lib/esm/index.js"
             },
             "require": {
-                "types": "./lib/index.d.cts",
+                "types": "./lib/esm/index.d.ts",
                 "default": "./lib/index.cjs"
             }
         }
@@ -34,9 +34,7 @@
         "lint:fix": "biome check --fix",
         "lint:fix-example": "biome check --fix example/src",
         "check": "tsc --noEmit",
-        "clean": "rimraf coverage lib",
-        "build": "pnpm clean && pnpm build:rollup",
-        "build:rollup": "rollup -c"
+        "build": "rolldown -c && tsc -p tsconfig.build.json"
     },
     "dependencies": {
         "ts-essentials": ">=10.0.0"
@@ -45,11 +43,8 @@
         "@biomejs/biome": "2.5.1",
         "@typescript/native": "npm:typescript@^7.0.2",
         "@vitest/coverage-v8": "4.1.2",
-        "rimraf": "6.1.3",
-        "rollup": "4.62.2",
-        "rollup-plugin-dts": "6.4.1",
-        "rollup-plugin-esbuild": "6.2.1",
-        "typescript": "npm:@typescript/typescript6@^6.0.2",
+        "rolldown": "1.2.0",
+        "typescript": "6.0.2",
         "vitest": "4.1.2"
     },
     "peerDependencies": {
