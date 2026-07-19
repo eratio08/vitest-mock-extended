@@ -166,7 +166,7 @@ describe('vitest-mock-extended', () => {
       }
     )
 
-    expect(() => mockObj.getSomethingWithArgs(1, 2)).toThrowError('not mocked')
+    expect(() => mockObj.getSomethingWithArgs(1, 2)).toThrow('not mocked')
   })
 
   test('Can set props', () => {
@@ -397,8 +397,8 @@ describe('vitest-mock-extended', () => {
         },
       })
       mockObj.deepProp.getAnotherString.calledWith('foo') // no mock implementation
-      expect(() => mockObj.getNumber()).toThrowError('not mocked')
-      expect(() => mockObj.deepProp.getAnotherString('foo')).toThrowError('not mocked')
+      expect(() => mockObj.getNumber()).toThrow('not mocked')
+      expect(() => mockObj.deepProp.getAnotherString('foo')).toThrow('not mocked')
     })
 
     test('fallback mock implementation can be overridden while also providing a mock implementation', () => {
@@ -418,8 +418,8 @@ describe('vitest-mock-extended', () => {
       mockObj.deepProp.getAnotherString.calledWith('?').mockReturnValue('mocked')
       expect(mockObj.getNumber()).toBe(150)
       expect(mockObj.deepProp.getAnotherString('?')).toBe('mocked')
-      expect(() => mockObj.deepProp.getNumber(1)).toThrowError('not mocked')
-      expect(() => mockObj.deepProp.getAnotherString('!')).toThrowError('not mocked')
+      expect(() => mockObj.deepProp.getNumber(1)).toThrow('not mocked')
+      expect(() => mockObj.deepProp.getAnotherString('!')).toThrow('not mocked')
     })
   })
 

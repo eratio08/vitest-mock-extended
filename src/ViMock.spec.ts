@@ -1,11 +1,10 @@
-import { beforeEach, describe, expect, type Mock, test, vi } from 'vitest'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 import { aFunction } from '../test/vi-mock-fixture'
 import { mockFn } from './Mock'
 
 vi.mock('../test/vi-mock-fixture')
 
-type AFunction = (value: string) => boolean
-const mockedAFunction = aFunction as Mock<AFunction>
+const mockedAFunction = vi.mocked(aFunction)
 
 describe('mockFn with an existing Vitest mock', () => {
   beforeEach(() => {
@@ -52,7 +51,7 @@ describe('mockFn with an existing Vitest mock', () => {
   test('rejects a non-Vitest function', () => {
     const realFunction = () => true
 
-    expect(() => mockFn(realFunction)).toThrowError('mockFn expects a Vitest mock function')
+    expect(() => mockFn(realFunction)).toThrow('mockFn expects a Vitest mock function')
   })
 
   test('can be configured again after the existing mock is reset', () => {
