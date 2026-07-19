@@ -1,2 +1,10 @@
 allowBuilds:
   esbuild: true
+minimumReleaseAgeExclude:
+  - vite@6.4.2 || 6.4.3
+  - postcss@8.5.10
+overrides:
+  postcss@<8.5.10: ^8.5.10
+  vite@<=6.4.1: ^6.4.2
+  vite@<=6.4.2: ^6.4.3
+  vite@>=6.0.0 <=6.4.1: ^6.4.2
