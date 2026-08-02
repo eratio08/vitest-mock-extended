@@ -33,7 +33,10 @@ jobs:
           check-latest: true
 
       - name: Install dependencies
-        run: pnpm recursive install ${{ github.actor != 'dependabot[bot]' && '--frozen-lockfile' || '--no-frozen-lockfile' }}
+        run: |
+          pnpm recursive install ${{ github.actor != 'dependabot[bot]' && '--frozen-lockfile' || '--no-frozen-lockfile' }}
+          (cd example && pnpm install --ignore-workspace --ignore-scripts ${{ github.actor != 'dependabot[bot]' && '--frozen-lockfile' || '--no-frozen-lockfile' }})
+          (cd example-cjs && pnpm install --ignore-workspace --ignore-scripts ${{ github.actor != 'dependabot[bot]' && '--frozen-lockfile' || '--no-frozen-lockfile' }})
 
       - run: echo "${{ toJSON(env) }}"
 

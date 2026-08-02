@@ -1,6 +1,6 @@
 {
     "name": "vitest-mock-extended",
-    "version": "5.1.0",
+    "version": "5.1.1",
     "homepage": "https://github.com/eratio08/vitest-mock-extended",
     "description": "Type safe mocking extensions for vitest, forked from jest-mock-extended",
     "repository": {
@@ -12,7 +12,7 @@
     "files": [
         "lib/**/*"
     ],
-    "main": "./lib/esm/index.js",
+    "main": "./lib/index.cjs",
     "types": "./lib/esm/index.d.ts",
     "module": "./lib/esm/index.js",
     "exports": {
@@ -22,19 +22,20 @@
                 "default": "./lib/esm/index.js"
             },
             "require": {
-                "types": "./lib/esm/index.d.ts",
+                "types": "./lib/index.d.cts",
                 "default": "./lib/index.cjs"
-            }
+            },
+            "default": "./lib/esm/index.js"
         }
     },
     "type": "module",
     "scripts": {
-        "test": "vitest run --coverage",
+        "test": "vitest run --coverage && pnpm --dir example test && pnpm --dir example-cjs test",
         "lint": "biome check",
         "lint:fix": "biome check --fix",
         "lint:fix-example": "biome check --fix example/src",
         "check": "tsc --noEmit",
-        "build": "rolldown -c && tsc -p tsconfig.build.json"
+        "build": "rolldown -c"
     },
     "dependencies": {
         "ts-essentials": "^10.2.1"
@@ -44,6 +45,7 @@
         "@typescript/native": "npm:typescript@^7.0.2",
         "@vitest/coverage-v8": "4.1.2",
         "rolldown": "1.2.0",
+        "rolldown-plugin-dts": "0.28.0",
         "typescript": "6.0.2",
         "vitest": "4.1.2"
     },
