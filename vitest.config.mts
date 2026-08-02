@@ -10,7 +10,7 @@ export default defineConfig({
     ...configDefaults,
     includeSource: ['./src'],
 
-    exclude: [...configDefaults.exclude, 'lib/**'],
+    exclude: [...configDefaults.exclude, 'lib/**', 'example/**', 'example-cjs/**'],
     coverage: {
       ...configDefaults.coverage,
       exclude: [...(configDefaults.coverage?.exclude ?? []), '**/*.spec.ts', 'lib/**'],

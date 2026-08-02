@@ -1,0 +1,16 @@
+{
+    "name": "example-cjs",
+    "private": true,
+    "version": "1.0.0",
+    "type": "commonjs",
+    "scripts": {
+        "test": "pnpm type-check && node src/resolve.cjs",
+        "type-check": "tsc --noEmit"
+    },
+    "devDependencies": {
+        "@types/node": "26.1.0",
+        "typescript": "6.0.2",
+        "vitest": "4.1.2",
+        "vitest-mock-extended": "link:.."
+    }
+}
