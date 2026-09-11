@@ -16,7 +16,7 @@ importers:
     dependencies:
       ts-essentials:
         specifier: ^10.2.1
-        version: 10.2.1(typescript@6.0.2)
+        version: 10.2.1(typescript@7.0.2)
     devDependencies:
       '@biomejs/biome':
         specifier: 2.5.10
@@ -32,10 +32,10 @@ importers:
         version: 1.2.5
       rolldown-plugin-dts:
         specifier: 0.28.2
-        version: 0.28.2(rolldown@1.2.5)(typescript@6.0.2)
+        version: 0.28.2(rolldown@1.2.5)(typescript@7.0.2)
       typescript:
-        specifier: 6.0.2
-        version: 6.0.2
+        specifier: 7.0.2
+        version: 7.0.2
       vitest:
         specifier: 4.1.11
         version: 4.1.11(@types/node@26.1.0)(@vitest/coverage-v8@4.1.2)(vite@6.4.3(@types/node@26.1.0)(lightningcss@1.32.0))
@@ -1117,11 +1117,6 @@ packages:
       typescript:
         optional: true
 
-  typescript@6.0.2:
-    resolution: {integrity: sha512-bGdAIrZ0wiGDo5l8c++HWtbaNCWTS4UTv7RaTH/ThVIgjkveJt83m74bBHMJkuCbslY8ixgLBVZJIOiQlQTjfQ==}
-    engines: {node: '>=14.17'}
-    hasBin: true
-
   typescript@7.0.2:
     resolution: {integrity: sha512-8FYau96o3NKOhbjKi/qNvG/W5jhzxkbdm5sj9AbZ/5T5sWqn3hJgLfGx27sRKZWTvyzCP8dLRBTf5tBTSRVUNA==}
     engines: {node: '>=16.20.0'}
@@ -1873,7 +1868,7 @@ snapshots:
 
   resolve-pkg-maps@1.0.0: {}
 
-  rolldown-plugin-dts@0.28.2(rolldown@1.2.5)(typescript@6.0.2):
+  rolldown-plugin-dts@0.28.2(rolldown@1.2.5)(typescript@7.0.2):
     dependencies:
       dts-resolver: 3.0.0
       get-tsconfig: 5.0.0-beta.5
@@ -1883,7 +1878,7 @@ snapshots:
       yuku-codegen: 0.8.7
       yuku-parser: 0.8.7
     optionalDependencies:
-      typescript: 6.0.2
+      typescript: 7.0.2
     transitivePeerDependencies:
       - oxc-resolver
 
@@ -1966,11 +1961,9 @@ snapshots:
 
   tinyrainbow@3.1.1: {}
 
-  ts-essentials@10.2.1(typescript@6.0.2):
+  ts-essentials@10.2.1(typescript@7.0.2):
     optionalDependencies:
-      typescript: 6.0.2
-
-  typescript@6.0.2: {}
+      typescript: 7.0.2
 
   typescript@7.0.2:
     optionalDependencies:
