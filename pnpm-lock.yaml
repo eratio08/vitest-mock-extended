@@ -67,8 +67,8 @@ importers:
         specifier: 26.6.3
         version: 26.6.3
       typescript:
-        specifier: 6.0.2
-        version: 6.0.2
+        specifier: 7.0.2
+        version: 7.0.2
       vitest:
         specifier: 5.0.2
         version: 5.0.2(@types/node@26.6.3)(@vitest/coverage-v8@5.0.2)(vite@6.4.3(@types/node@26.6.3)(lightningcss@1.32.0))
@@ -1311,11 +1311,6 @@ packages:
     engines: {node: '>=12'}
     hasBin: true
 
-  typescript@6.0.2:
-    resolution: {integrity: sha512-bGdAIrZ0wiGDo5l8c++HWtbaNCWTS4UTv7RaTH/ThVIgjkveJt83m74bBHMJkuCbslY8ixgLBVZJIOiQlQTjfQ==}
-    engines: {node: '>=14.17'}
-    hasBin: true
-
   typescript@7.0.2:
     resolution: {integrity: sha512-8FYau96o3NKOhbjKi/qNvG/W5jhzxkbdm5sj9AbZ/5T5sWqn3hJgLfGx27sRKZWTvyzCP8dLRBTf5tBTSRVUNA==}
     engines: {node: '>=16.20.0'}
@@ -2236,8 +2231,6 @@ snapshots:
   tsm@2.3.0:
     dependencies:
       esbuild: 0.15.18
-
-  typescript@6.0.2: {}
 
   typescript@7.0.2:
     optionalDependencies:
