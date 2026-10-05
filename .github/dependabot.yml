@@ -10,6 +10,11 @@ updates:
       interval: "monthly"
     cooldown:
       default-days: 7
+    groups:
+      vitest:
+        patterns:
+          - "vitest"
+          - "@vitest/coverage-v8"
 
   - package-ecosystem: "npm"
     directory: "/example"
@@ -19,6 +24,11 @@ updates:
       interval: "monthly"
     cooldown:
       default-days: 7
+    groups:
+      vitest:
+        patterns:
+          - "vitest"
+          - "@vitest/coverage-v8"
 
   - package-ecosystem: "github-actions"
     directory: "/"
