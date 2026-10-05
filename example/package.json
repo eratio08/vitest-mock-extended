@@ -18,7 +18,7 @@
         "@vitest/coverage-v8": "5.0.2",
         "ts-node": "10.9.2",
         "tsm": "2.3.0",
-        "typescript": "6.0.2",
+        "typescript": "7.0.2",
         "vitest": "5.0.2",
         "vitest-mock-extended": "workspace:*"
     }
