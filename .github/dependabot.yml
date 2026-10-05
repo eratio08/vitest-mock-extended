@@ -15,6 +15,10 @@ updates:
         patterns:
           - "vitest"
           - "@vitest/coverage-v8"
+      rolldown:
+        patterns:
+          - "rolldown"
+          - "rolldown-plugin-dts"
 
   - package-ecosystem: "github-actions"
     directory: "/"
