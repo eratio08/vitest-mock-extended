@@ -20,6 +20,6 @@
         "tsm": "2.3.0",
         "typescript": "6.0.2",
         "vitest": "4.1.2",
-        "vitest-mock-extended": "link:.."
+        "vitest-mock-extended": "workspace:*"
     }
 }
