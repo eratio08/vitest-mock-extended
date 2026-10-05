@@ -64,14 +64,14 @@ importers:
   example-cjs:
     devDependencies:
       '@types/node':
-        specifier: 26.1.0
-        version: 26.1.0
+        specifier: 26.6.3
+        version: 26.6.3
       typescript:
         specifier: 6.0.2
         version: 6.0.2
       vitest:
         specifier: 5.0.2
-        version: 5.0.2(@types/node@26.1.0)(@vitest/coverage-v8@5.0.2)(vite@6.4.3(@types/node@26.1.0)(lightningcss@1.32.0))
+        version: 5.0.2(@types/node@26.6.3)(@vitest/coverage-v8@5.0.2)(vite@6.4.3(@types/node@26.6.3)(lightningcss@1.32.0))
       vitest-mock-extended:
         specifier: workspace:*
         version: link:..
@@ -601,9 +601,6 @@ packages:
 
   '@types/estree@1.0.9':
     resolution: {integrity: sha512-GhdPgy1el4/ImP05X05Uw4cw2/M93BCUmnEvWZNStlCzEKME4Fkk+YpoA5OiHNQmoS7Cafb8Xa3Pya8m1Qrzeg==}
-
-  '@types/node@26.1.0':
-    resolution: {integrity: sha512-O0A1G3xPGy4w7AgQdAQYUlQ+BKk2Oovw8eRpofyp5KdBZULnbe+WqaOVNrm705SHphCiG4XHsACrSmPu1f+Kgw==}
 
   '@types/node@26.6.3':
     resolution: {integrity: sha512-dsqMQQoeTLqu9wynDD00q573mNzso3IdQOAfHRJqLCcmCFPoGo9A1bDpUcv/9tnKpErQWv9uKeGfl37EIS02Yg==}
@@ -1324,9 +1321,6 @@ packages:
     engines: {node: '>=16.20.0'}
     hasBin: true
 
-  undici-types@8.3.0:
-    resolution: {integrity: sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ==}
-
   undici-types@8.9.0:
     resolution: {integrity: sha512-KTDyRTYX8sWmKXAikPHHSyc63CRPETMctyjKFupcC6OBLXT3xsN0e9aF7m+mIXutFWpUXuedtowG7iLOzp0kQg==}
 
@@ -1727,10 +1721,6 @@ snapshots:
 
   '@types/estree@1.0.9': {}
 
-  '@types/node@26.1.0':
-    dependencies:
-      undici-types: 8.3.0
-
   '@types/node@26.6.3':
     dependencies:
       undici-types: 8.9.0
@@ -1812,15 +1802,6 @@ snapshots:
   '@vitest/istanbul-lib-report@1.0.2':
     dependencies:
       '@vitest/istanbul-lib-coverage': 1.0.2
-
-  '@vitest/mocker@5.0.2(vite@6.4.3(@types/node@26.1.0)(lightningcss@1.32.0))':
-    dependencies:
-      '@jridgewell/trace-mapping': 0.3.31
-      '@vitest/spy': 5.0.2
-      estree-walker: 3.0.3
-      magic-string: 1.4.2
-    optionalDependencies:
-      vite: 6.4.3(@types/node@26.1.0)(lightningcss@1.32.0)
 
   '@vitest/mocker@5.0.2(vite@6.4.3(@types/node@26.6.3)(lightningcss@1.32.0))':
     dependencies:
@@ -2281,24 +2262,9 @@ snapshots:
       '@typescript/typescript-win32-arm64': 7.0.2
       '@typescript/typescript-win32-x64': 7.0.2
 
-  undici-types@8.3.0: {}
-
   undici-types@8.9.0: {}
 
   v8-compile-cache-lib@3.0.1: {}
-
-  vite@6.4.3(@types/node@26.1.0)(lightningcss@1.32.0):
-    dependencies:
-      esbuild: 0.25.12
-      fdir: 6.5.0(picomatch@4.0.7)
-      picomatch: 4.0.7
-      postcss: 8.5.25
-      rollup: 4.62.3
-      tinyglobby: 0.2.17
-    optionalDependencies:
-      '@types/node': 26.1.0
-      fsevents: 2.3.3
-      lightningcss: 1.32.0
 
   vite@6.4.3(@types/node@26.6.3)(lightningcss@1.32.0):
     dependencies:
@@ -2312,28 +2278,6 @@ snapshots:
       '@types/node': 26.6.3
       fsevents: 2.3.3
       lightningcss: 1.32.0
-
-  vitest@5.0.2(@types/node@26.1.0)(@vitest/coverage-v8@5.0.2)(vite@6.4.3(@types/node@26.1.0)(lightningcss@1.32.0)):
-    dependencies:
-      '@types/chai': 5.2.3
-      '@vitest/mocker': 5.0.2(vite@6.4.3(@types/node@26.1.0)(lightningcss@1.32.0))
-      chai: 6.2.2
-      es-module-lexer: 2.3.2
-      expect-type: 1.4.0
-      magic-string: 1.4.2
-      obug: 2.2.1
-      picomatch: 4.0.7
-      std-env: 4.2.0
-      tinybench: 6.2.0
-      tinyexec: 1.3.1
-      tinyglobby: 0.2.17
-      vite: 6.4.3(@types/node@26.1.0)(lightningcss@1.32.0)
-      why-is-node-running: 3.2.2
-    optionalDependencies:
-      '@types/node': 26.1.0
-      '@vitest/coverage-v8': 5.0.2(vitest@5.0.2)
-    transitivePeerDependencies:
-      - msw
 
   vitest@5.0.2(@types/node@26.6.3)(@vitest/coverage-v8@5.0.2)(vite@6.4.3(@types/node@26.6.3)(lightningcss@1.32.0)):
     dependencies:
