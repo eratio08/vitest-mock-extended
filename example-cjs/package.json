@@ -8,7 +8,7 @@
         "type-check": "tsc --noEmit"
     },
     "devDependencies": {
-        "@types/node": "26.1.0",
+        "@types/node": "26.6.3",
         "typescript": "6.0.2",
         "vitest": "5.0.2",
         "vitest-mock-extended": "workspace:*"
