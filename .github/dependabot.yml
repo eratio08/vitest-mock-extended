@@ -16,20 +16,6 @@ updates:
           - "vitest"
           - "@vitest/coverage-v8"
 
-  - package-ecosystem: "npm"
-    directory: "/example"
-    commit-message:
-      prefix: "chore: "
-    schedule:
-      interval: "monthly"
-    cooldown:
-      default-days: 7
-    groups:
-      vitest:
-        patterns:
-          - "vitest"
-          - "@vitest/coverage-v8"
-
   - package-ecosystem: "github-actions"
     directory: "/"
     commit-message:
