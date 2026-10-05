@@ -16,8 +16,7 @@
         "module": "ES2022",
         "moduleResolution": "Bundler",
         "isolatedModules": true,
-        "outDir": "lib",
-        "declarationDir": "lib/types"
+        "outDir": "lib"
     },
     "files": ["src/index.ts"],
     "include": ["src", "**/*.mts"],

@@ -1,3 +1,6 @@
+packages:
+  - example
+  - example-cjs
 allowBuilds:
   esbuild: true
 minimumReleaseAgeExclude:

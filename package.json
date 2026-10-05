@@ -30,11 +30,11 @@
     },
     "type": "module",
     "scripts": {
-        "test": "vitest run --coverage && pnpm --dir example test && pnpm --dir example-cjs test",
-        "lint": "biome check",
-        "lint:fix": "biome check --fix",
+        "test": "vitest run --coverage && pnpm --recursive test",
+        "lint": "biome check .",
+        "lint:fix": "biome check --fix .",
         "lint:fix-example": "biome check --fix example/src",
-        "check": "tsc --noEmit",
+        "check": "tsc --noEmit && pnpm --recursive type-check",
         "build": "rolldown -c"
     },
     "dependencies": {
@@ -46,7 +46,7 @@
         "@vitest/coverage-v8": "4.1.2",
         "rolldown": "1.2.10",
         "rolldown-plugin-dts": "0.28.2",
-        "typescript": "6.0.2",
+        "typescript": "7.0.2",
         "vitest": "4.1.11"
     },
     "peerDependencies": {

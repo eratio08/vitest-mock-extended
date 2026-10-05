@@ -4,11 +4,7 @@ import pkg from './package.json' with { type: 'json' }
 
 const external = [...Object.keys(pkg.dependencies), ...Object.keys(pkg.peerDependencies)]
 const input = 'src/index.ts'
-const declaration = () =>
-  dts({
-    generator: 'tsc',
-    emitDtsOnly: true,
-  })
+const declaration = () => dts({ emitDtsOnly: true })
 
 export default [
   defineConfig({

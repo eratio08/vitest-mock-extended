@@ -33,15 +33,9 @@ jobs:
           check-latest: true
 
       - name: Install dependencies
-        run: |
-          pnpm recursive install ${{ github.actor != 'dependabot[bot]' && '--frozen-lockfile' || '--no-frozen-lockfile' }}
-          (cd example && pnpm install --ignore-workspace --ignore-scripts ${{ github.actor != 'dependabot[bot]' && '--frozen-lockfile' || '--no-frozen-lockfile' }})
-          (cd example-cjs && pnpm install --ignore-workspace --ignore-scripts ${{ github.actor != 'dependabot[bot]' && '--frozen-lockfile' || '--no-frozen-lockfile' }})
+        run: pnpm install ${{ github.actor != 'dependabot[bot]' && '--frozen-lockfile' || '--no-frozen-lockfile' }}
 
       - run: echo "${{ toJSON(env) }}"
-
-      - name: Type check
-        run: pnpm check
 
       - name: Lint
         run: pnpm lint
@@ -49,6 +43,9 @@ jobs:
         # We need to build before test to make the example project work
       - name: Build
         run: pnpm build
+
+      - name: Type check
+        run: pnpm check
 
       - name: Unit-Tests
         run: pnpm test
