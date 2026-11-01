@@ -37,19 +37,19 @@ importers:
         version: 7.0.2
       vitest:
         specifier: 5.0.2
-        version: 5.0.2(@types/node@26.6.3)(@vitest/coverage-v8@5.0.2)(vite@6.4.3(@types/node@26.6.3)(lightningcss@1.32.0))
+        version: 5.0.2(@types/node@26.6.5)(@vitest/coverage-v8@5.0.2)(vite@6.4.3(@types/node@26.6.5)(lightningcss@1.32.0))
 
   example:
     devDependencies:
       '@types/node':
-        specifier: 26.6.3
-        version: 26.6.3
+        specifier: 26.6.5
+        version: 26.6.5
       '@vitest/coverage-v8':
         specifier: 5.0.2
         version: 5.0.2(vitest@5.0.2)
       ts-node:
         specifier: 10.9.2
-        version: 10.9.2(@types/node@26.6.3)(typescript@7.0.2)
+        version: 10.9.2(@types/node@26.6.5)(typescript@7.0.2)
       tsm:
         specifier: 2.3.0
         version: 2.3.0
@@ -58,7 +58,7 @@ importers:
         version: 7.0.2
       vitest:
         specifier: 5.0.2
-        version: 5.0.2(@types/node@26.6.3)(@vitest/coverage-v8@5.0.2)(vite@6.4.3(@types/node@26.6.3)(lightningcss@1.32.0))
+        version: 5.0.2(@types/node@26.6.5)(@vitest/coverage-v8@5.0.2)(vite@6.4.3(@types/node@26.6.5)(lightningcss@1.32.0))
       vitest-mock-extended:
         specifier: workspace:*
         version: link:..
@@ -66,14 +66,14 @@ importers:
   example-cjs:
     devDependencies:
       '@types/node':
-        specifier: 26.6.3
-        version: 26.6.3
+        specifier: 26.6.5
+        version: 26.6.5
       typescript:
         specifier: 7.0.2
         version: 7.0.2
       vitest:
         specifier: 5.0.2
-        version: 5.0.2(@types/node@26.6.3)(@vitest/coverage-v8@5.0.2)(vite@6.4.3(@types/node@26.6.3)(lightningcss@1.32.0))
+        version: 5.0.2(@types/node@26.6.5)(@vitest/coverage-v8@5.0.2)(vite@6.4.3(@types/node@26.6.5)(lightningcss@1.32.0))
       vitest-mock-extended:
         specifier: workspace:*
         version: link:..
@@ -592,8 +592,8 @@ packages:
   '@types/estree@1.0.9':
     resolution: {integrity: sha512-GhdPgy1el4/ImP05X05Uw4cw2/M93BCUmnEvWZNStlCzEKME4Fkk+YpoA5OiHNQmoS7Cafb8Xa3Pya8m1Qrzeg==}
 
-  '@types/node@26.6.3':
-    resolution: {integrity: sha512-dsqMQQoeTLqu9wynDD00q573mNzso3IdQOAfHRJqLCcmCFPoGo9A1bDpUcv/9tnKpErQWv9uKeGfl37EIS02Yg==}
+  '@types/node@26.6.5':
+    resolution: {integrity: sha512-uMzsv9stDdofIZBx4UGh4Z9ZgXnGC9seRDscilBcTHAeOFk67MZg/k9bWVfO+bk4qZmG+l52hRnLwUiH2LnJTg==}
 
   '@typescript/typescript-aix-ppc64@7.0.2':
     resolution: {integrity: sha512-MTKKkWB7p/0E9xi1d1tHtZ5PiLkGEMIq88pK2CubZjOsLtYTLqhgIgi6zepFa+9GHZ6h05NMCkQxGKiPXMxXtQ==}
@@ -1575,7 +1575,7 @@ snapshots:
 
   '@types/estree@1.0.9': {}
 
-  '@types/node@26.6.3':
+  '@types/node@26.6.5':
     dependencies:
       undici-types: 8.9.0
 
@@ -1649,7 +1649,7 @@ snapshots:
       obug: 2.2.1
       std-env: 4.2.0
       tinyrainbow: 3.1.1
-      vitest: 5.0.2(@types/node@26.6.3)(@vitest/coverage-v8@5.0.2)(vite@6.4.3(@types/node@26.6.3)(lightningcss@1.32.0))
+      vitest: 5.0.2(@types/node@26.6.5)(@vitest/coverage-v8@5.0.2)(vite@6.4.3(@types/node@26.6.5)(lightningcss@1.32.0))
 
   '@vitest/istanbul-lib-coverage@1.0.2': {}
 
@@ -1657,14 +1657,14 @@ snapshots:
     dependencies:
       '@vitest/istanbul-lib-coverage': 1.0.2
 
-  '@vitest/mocker@5.0.2(vite@6.4.3(@types/node@26.6.3)(lightningcss@1.32.0))':
+  '@vitest/mocker@5.0.2(vite@6.4.3(@types/node@26.6.5)(lightningcss@1.32.0))':
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       '@vitest/spy': 5.0.2
       estree-walker: 3.0.3
       magic-string: 1.4.2
     optionalDependencies:
-      vite: 6.4.3(@types/node@26.6.3)(lightningcss@1.32.0)
+      vite: 6.4.3(@types/node@26.6.5)(lightningcss@1.32.0)
 
   '@vitest/spy@5.0.2': {}
 
@@ -1984,14 +1984,14 @@ snapshots:
     optionalDependencies:
       typescript: 7.0.2
 
-  ts-node@10.9.2(@types/node@26.6.3)(typescript@7.0.2):
+  ts-node@10.9.2(@types/node@26.6.5)(typescript@7.0.2):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       '@tsconfig/node10': 1.0.13
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 26.6.3
+      '@types/node': 26.6.5
       acorn: 8.18.0
       acorn-walk: 8.3.5
       arg: 4.1.3
@@ -2033,7 +2033,7 @@ snapshots:
 
   v8-compile-cache-lib@3.0.1: {}
 
-  vite@6.4.3(@types/node@26.6.3)(lightningcss@1.32.0):
+  vite@6.4.3(@types/node@26.6.5)(lightningcss@1.32.0):
     dependencies:
       esbuild: 0.25.12
       fdir: 6.5.0(picomatch@4.0.7)
@@ -2042,14 +2042,14 @@ snapshots:
       rollup: 4.62.3
       tinyglobby: 0.2.17
     optionalDependencies:
-      '@types/node': 26.6.3
+      '@types/node': 26.6.5
       fsevents: 2.3.3
       lightningcss: 1.32.0
 
-  vitest@5.0.2(@types/node@26.6.3)(@vitest/coverage-v8@5.0.2)(vite@6.4.3(@types/node@26.6.3)(lightningcss@1.32.0)):
+  vitest@5.0.2(@types/node@26.6.5)(@vitest/coverage-v8@5.0.2)(vite@6.4.3(@types/node@26.6.5)(lightningcss@1.32.0)):
     dependencies:
       '@types/chai': 5.2.3
-      '@vitest/mocker': 5.0.2(vite@6.4.3(@types/node@26.6.3)(lightningcss@1.32.0))
+      '@vitest/mocker': 5.0.2(vite@6.4.3(@types/node@26.6.5)(lightningcss@1.32.0))
       chai: 6.2.2
       es-module-lexer: 2.3.2
       expect-type: 1.4.0
@@ -2060,10 +2060,10 @@ snapshots:
       tinybench: 6.2.0
       tinyexec: 1.3.1
       tinyglobby: 0.2.17
-      vite: 6.4.3(@types/node@26.6.3)(lightningcss@1.32.0)
+      vite: 6.4.3(@types/node@26.6.5)(lightningcss@1.32.0)
       why-is-node-running: 3.2.2
     optionalDependencies:
-      '@types/node': 26.6.3
+      '@types/node': 26.6.5
       '@vitest/coverage-v8': 5.0.2(vitest@5.0.2)
     transitivePeerDependencies:
       - msw
