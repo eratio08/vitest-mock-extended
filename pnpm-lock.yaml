@@ -37,7 +37,7 @@ importers:
         version: 7.0.2
       vitest:
         specifier: 5.0.2
-        version: 5.0.2(@types/node@26.6.5)(@vitest/coverage-v8@5.0.2)(vite@6.4.3(@types/node@26.6.5)(lightningcss@1.32.0))
+        version: 5.0.2(@types/node@26.6.5)(@vitest/coverage-v8@5.0.2)(vite@6.4.5(@types/node@26.6.5)(lightningcss@1.32.0))
 
   example:
     devDependencies:
@@ -58,7 +58,7 @@ importers:
         version: 7.0.2
       vitest:
         specifier: 5.0.2
-        version: 5.0.2(@types/node@26.6.5)(@vitest/coverage-v8@5.0.2)(vite@6.4.3(@types/node@26.6.5)(lightningcss@1.32.0))
+        version: 5.0.2(@types/node@26.6.5)(@vitest/coverage-v8@5.0.2)(vite@6.4.5(@types/node@26.6.5)(lightningcss@1.32.0))
       vitest-mock-extended:
         specifier: workspace:*
         version: link:..
@@ -73,7 +73,7 @@ importers:
         version: 7.0.2
       vitest:
         specifier: 5.0.2
-        version: 5.0.2(@types/node@26.6.5)(@vitest/coverage-v8@5.0.2)(vite@6.4.3(@types/node@26.6.5)(lightningcss@1.32.0))
+        version: 5.0.2(@types/node@26.6.5)(@vitest/coverage-v8@5.0.2)(vite@6.4.5(@types/node@26.6.5)(lightningcss@1.32.0))
       vitest-mock-extended:
         specifier: workspace:*
         version: link:..
@@ -1097,8 +1097,8 @@ packages:
   v8-compile-cache-lib@3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}
 
-  vite@6.4.3:
-    resolution: {integrity: sha512-NTKlcQjlAK7MlQoyb6LgaqHc8sso/pVyUJYWMws3jg21uTJw/LddqIFPcPqP6PzpgbIcZyKI85sFE4HBrQDA8A==}
+  vite@6.4.5:
+    resolution: {integrity: sha512-4enwjFfi4IwtEh0w+jPzpLVOFQiPHmmzPxcHXQOyEur47o6u0jE573DmGpjA+7irXoMLYRZD5ZaFUEneS3abPg==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
     peerDependencies:
@@ -1566,7 +1566,7 @@ snapshots:
       obug: 2.2.1
       std-env: 4.2.0
       tinyrainbow: 3.1.1
-      vitest: 5.0.2(@types/node@26.6.5)(@vitest/coverage-v8@5.0.2)(vite@6.4.3(@types/node@26.6.5)(lightningcss@1.32.0))
+      vitest: 5.0.2(@types/node@26.6.5)(@vitest/coverage-v8@5.0.2)(vite@6.4.5(@types/node@26.6.5)(lightningcss@1.32.0))
 
   '@vitest/istanbul-lib-coverage@1.0.2': {}
 
@@ -1574,14 +1574,14 @@ snapshots:
     dependencies:
       '@vitest/istanbul-lib-coverage': 1.0.2
 
-  '@vitest/mocker@5.0.2(vite@6.4.3(@types/node@26.6.5)(lightningcss@1.32.0))':
+  '@vitest/mocker@5.0.2(vite@6.4.5(@types/node@26.6.5)(lightningcss@1.32.0))':
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       '@vitest/spy': 5.0.2
       estree-walker: 3.0.3
       magic-string: 1.4.2
     optionalDependencies:
-      vite: 6.4.3(@types/node@26.6.5)(lightningcss@1.32.0)
+      vite: 6.4.5(@types/node@26.6.5)(lightningcss@1.32.0)
 
   '@vitest/spy@5.0.2': {}
 
@@ -1914,7 +1914,7 @@ snapshots:
 
   v8-compile-cache-lib@3.0.1: {}
 
-  vite@6.4.3(@types/node@26.6.5)(lightningcss@1.32.0):
+  vite@6.4.5(@types/node@26.6.5)(lightningcss@1.32.0):
     dependencies:
       esbuild: 0.25.12
       fdir: 6.5.0(picomatch@4.0.7)
@@ -1927,10 +1927,10 @@ snapshots:
       fsevents: 2.3.3
       lightningcss: 1.32.0
 
-  vitest@5.0.2(@types/node@26.6.5)(@vitest/coverage-v8@5.0.2)(vite@6.4.3(@types/node@26.6.5)(lightningcss@1.32.0)):
+  vitest@5.0.2(@types/node@26.6.5)(@vitest/coverage-v8@5.0.2)(vite@6.4.5(@types/node@26.6.5)(lightningcss@1.32.0)):
     dependencies:
       '@types/chai': 5.2.3
-      '@vitest/mocker': 5.0.2(vite@6.4.3(@types/node@26.6.5)(lightningcss@1.32.0))
+      '@vitest/mocker': 5.0.2(vite@6.4.5(@types/node@26.6.5)(lightningcss@1.32.0))
       chai: 6.2.2
       es-module-lexer: 2.3.2
       expect-type: 1.4.0
@@ -1941,7 +1941,7 @@ snapshots:
       tinybench: 6.2.0
       tinyexec: 1.3.1
       tinyglobby: 0.2.17
-      vite: 6.4.3(@types/node@26.6.5)(lightningcss@1.32.0)
+      vite: 6.4.5(@types/node@26.6.5)(lightningcss@1.32.0)
       why-is-node-running: 3.2.2
     optionalDependencies:
       '@types/node': 26.6.5
