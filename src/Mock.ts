@@ -129,15 +129,21 @@ function mockDeep(arg1: any, arg2?: any) {
   return mock(mockImplementation, { deep: true, fallbackMockImplementation: opts.fallbackMockImplementation })
 }
 
+const isAssignable = (obj: object, name: string): boolean => {
+  const descriptor = Object.getOwnPropertyDescriptor(obj, name)
+  return descriptor?.writable === true || descriptor?.set !== undefined
+}
+
 // biome-ignore lint/suspicious/noExplicitAny: This is necessary to support any matcher that has an asymmetricMatch function, not just our own Matcher class.
 const overrideMockImp = (obj: DeepPartial<any>, opts?: MockOpts) => {
   // biome-ignore lint/suspicious/noExplicitAny: This is necessary to support any matcher that has an asymmetricMatch function, not just our own Matcher class.
   const proxy = new Proxy<MockProxy<any>>(obj, handler(opts))
   for (const name of Object.keys(obj)) {
-    if (typeof obj[name] === 'object' && obj[name] !== null) {
-      proxy[name] = overrideMockImp(obj[name], opts)
-    } else {
-      proxy[name] = obj[name]
+    const value = obj[name]
+    // Only nested objects need to be replaced (by a mock proxy). Objects that cannot be extended (e.g. frozen) are kept
+    // as-is, and readonly properties are never reassigned, as either would throw.
+    if (typeof value === 'object' && value !== null && Object.isExtensible(value) && isAssignable(obj, name)) {
+      proxy[name] = overrideMockImp(value, opts)
     }
   }
 

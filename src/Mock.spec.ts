@@ -474,6 +474,32 @@ describe('vitest-mock-extended', () => {
       mockObj.deepProp.getAnotherString.calledWith('abc').mockReturnValue('this string')
       expect(mockObj.deepProp.getAnotherString('abc')).toBe('this string')
     })
+
+    test('accepts a nested frozen object without mutating it', () => {
+      const dependency = Object.freeze({ value: 'original', nested: Object.freeze({ count: 1 }) })
+
+      const mockObj = mock<{ dependency: typeof dependency }>({ dependency })
+      const deepMockObj = mockDeep<{ dependency: typeof dependency }>({ dependency })
+
+      expect(mockObj.dependency).toBe(dependency)
+      expect(deepMockObj.dependency).toBe(dependency)
+      expect(dependency.value).toBe('original')
+      expect(dependency.nested).toEqual({ count: 1 })
+    })
+
+    test('accepts nested objects with readonly own properties', () => {
+      const child = { count: 1 }
+      const dependency = {}
+      Object.defineProperty(dependency, 'value', { value: 'original', enumerable: true })
+      Object.defineProperty(dependency, 'child', { value: child, enumerable: true })
+
+      const mockObj = mock<{ dependency: { value: string; child: { count: number } } }>({
+        dependency: dependency as { value: string; child: { count: number } },
+      })
+
+      expect(mockObj.dependency.value).toBe('original')
+      expect(mockObj.dependency.child).toBe(child)
+    })
   })
 
   describe('Promise', () => {
