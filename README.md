@@ -34,42 +34,42 @@ If `ReferenceError: vi is not defined` related error occurs, please set [`global
 ## Example
 
 ```ts
-import { mock } from 'vitest-mock-extended';
+import { mock } from 'vitest-mock-extended'
 
 interface PartyProvider {
-    getPartyType: () => string;
-    getSongs: (type: string) => string[];
-    start: (type: string) => void;
+  getPartyType: () => string
+  getSongs: (type: string) => string[]
+  start: (type: string) => void
 }
 
 describe('Party Tests', () => {
-    test('Mock out an interface', () => {
-        const mock = mock<PartyProvider>();
-        mock.start('disco party');
+  test('Mock out an interface', () => {
+    const mock = mock<PartyProvider>()
+    mock.start('disco party')
 
-        expect(mock.start).toHaveBeenCalledWith('disco party');
-    });
+    expect(mock.start).toHaveBeenCalledWith('disco party')
+  })
 
-    test('mock out a return type', () => {
-        const mock = mock<PartyProvider>();
-        mock.getPartyType.mockReturnValue('west coast party');
+  test('mock out a return type', () => {
+    const mock = mock<PartyProvider>()
+    mock.getPartyType.mockReturnValue('west coast party')
 
-        expect(mock.getPartyType()).toBe('west coast party');
-    });
+    expect(mock.getPartyType()).toBe('west coast party')
+  })
 
-    test('Can specify fallbackMockImplementation', () => {
-        const mockObj = mock<MockInt>(
-            {},
-            {
-                fallbackMockImplementation: () => {
-                    throw new Error('not mocked');
-                },
-            }
-        );
+  test('Can specify fallbackMockImplementation', () => {
+    const mockObj = mock<MockInt>(
+      {},
+      {
+        fallbackMockImplementation: () => {
+          throw new Error('not mocked')
+        },
+      }
+    )
 
-        expect(() => mockObj.getSomethingWithArgs(1, 2)).toThrowError('not mocked');
-    });
-});
+    expect(() => mockObj.getSomethingWithArgs(1, 2)).toThrowError('not mocked')
+  })
+})
 ```
 
 ## Assigning Mocks with a Type
@@ -100,34 +100,34 @@ describe('test', () => {
 `vitest-mock-extended` allows for invocation matching expectations. Types of arguments, even when using matchers are type checked.
 
 ```ts
-const provider = mock<PartyProvider>();
-provider.getSongs.calledWith('disco party').mockReturnValue(['Dance the night away', 'Stayin Alive']);
-expect(provider.getSongs('disco party')).toEqual(['Dance the night away', 'Stayin Alive']);
+const provider = mock<PartyProvider>()
+provider.getSongs.calledWith('disco party').mockReturnValue(['Dance the night away', 'Stayin Alive'])
+expect(provider.getSongs('disco party')).toEqual(['Dance the night away', 'Stayin Alive'])
 
 // Matchers
-provider.getSongs.calledWith(any()).mockReturnValue(['Saw her standing there']);
-provider.getSongs.calledWith(anyString()).mockReturnValue(['Saw her standing there']);
+provider.getSongs.calledWith(any()).mockReturnValue(['Saw her standing there'])
+provider.getSongs.calledWith(anyString()).mockReturnValue(['Saw her standing there'])
 ```
 
 You can also use `mockFn()` to create a `vi.fn()` with the calledWith extension:
 
 ```ts
-type MyFn = (x: number, y: number) => Promise<string>;
-const fn = mockFn<MyFn>();
-fn.calledWith(1, 2).mockReturnValue('str');
+type MyFn = (x: number, y: number) => Promise<string>
+const fn = mockFn<MyFn>()
+fn.calledWith(1, 2).mockReturnValue('str')
 ```
 
 To add the `calledWith` extension to a function created by Vitest's `vi.mock`, pass the existing mock to `mockFn`. The same Vitest mock is returned, so its call history and standard mock APIs are retained:
 
 ```ts
-import { vi } from 'vitest';
-import { mockFn } from 'vitest-mock-extended';
-import { aFunction } from './someThingIWantToMock';
+import { vi } from 'vitest'
+import { mockFn } from 'vitest-mock-extended'
+import { aFunction } from './someThingIWantToMock'
 
-vi.mock('./someThingIWantToMock');
+vi.mock('./someThingIWantToMock')
 
-const mockedAFunction = mockFn(aFunction);
-mockedAFunction.calledWith('foobar').mockReturnValue(true);
+const mockedAFunction = mockFn(aFunction)
+mockedAFunction.calledWith('foobar').mockReturnValue(true)
 ```
 
 This decorates an individual, already-imported Vitest mock. It does not mock a module or provide a `mockImportDeep` helper; use Vitest's `vi.mock` (and its factory/hoisting rules) to create the module mock first.
@@ -156,62 +156,65 @@ If your class has objects returns from methods that you would also like to mock,
 replacement for mock.
 
 ```ts
-import { mockDeep } from 'vitest-mock-extended';
+import { mockDeep } from 'vitest-mock-extended'
 
-const mockObj: DeepMockProxy<Test1> = mockDeep<Test1>();
-mockObj.deepProp.getNumber.calledWith(1).mockReturnValue(4);
-expect(mockObj.deepProp.getNumber(1)).toBe(4);
+const mockObj: DeepMockProxy<Test1> = mockDeep<Test1>()
+mockObj.deepProp.getNumber.calledWith(1).mockReturnValue(4)
+expect(mockObj.deepProp.getNumber(1)).toBe(4)
 ```
 
 if you also need support for properties on functions, you can pass in an option to enable this
 
 ```ts
-import { mockDeep } from 'vitest-mock-extended';
-const mockObj: DeepMockProxy<Test1> = mockDeep<Test1>({ funcPropSupport: true });
-mockObj.deepProp.calledWith(1).mockReturnValue(3);
-mockObj.deepProp.getNumber.calledWith(1).mockReturnValue(4);
-expect(mockObj.deepProp(1)).toBe(3);
-expect(mockObj.deepProp.getNumber(1)).toBe(4);
+import { mockDeep } from 'vitest-mock-extended'
+const mockObj: DeepMockProxy<Test1> = mockDeep<Test1>({ funcPropSupport: true })
+mockObj.deepProp.calledWith(1).mockReturnValue(3)
+mockObj.deepProp.getNumber.calledWith(1).mockReturnValue(4)
+expect(mockObj.deepProp(1)).toBe(3)
+expect(mockObj.deepProp.getNumber(1)).toBe(4)
 ```
 
 You can also provide a fallback mock implementation to be used if you do not define a return value using `calledWith`.
 
 ```ts
-import { mockDeep } from 'jest-mock-extended';
+import { mockDeep } from 'jest-mock-extended'
 const mockObj = mockDeep<Test1>({
-    fallbackMockImplementation: () => {
-        throw new Error('please add expected return value using calledWith');
-    },
-});
-expect(() => mockObj.getNumber()).toThrowError('not mocked');
+  fallbackMockImplementation: () => {
+    throw new Error('please add expected return value using calledWith')
+  },
+})
+expect(() => mockObj.getNumber()).toThrowError('not mocked')
 ```
 
 ## Mocked Type Helpers
+
 If you mock objects/functions of modules and can't refer them directly due to hoist,
 mocked type helpers can be used. This is similar to the use case of Vitest's `vi.mocked`
+
 ```ts
 // APIs
-import { mocked, mockedFn } from "vitest-mock-extended";
-import { originalObj, originalFn} from "somewhere";
+import { mocked, mockedFn } from 'vitest-mock-extended'
+import { originalObj, originalFn } from 'somewhere'
 
-const mockedObj = mocked(originalObj);
-const deepMockedObj = mocked(originalObj, true);
-const mockedFunction = mockedFn(originalFn);
+const mockedObj = mocked(originalObj)
+const deepMockedObj = mocked(originalObj, true)
+const mockedFunction = mockedFn(originalFn)
 ```
 
 To detect whether a value was created by `mock()` or `mockDeep()`, use `isMockObject()`.
 It is safe to call with any value and narrows marked values to a `MockProxy`:
 
 ```ts
-import { isMockObject, type MockProxy } from "vitest-mock-extended";
+import { isMockObject, type MockProxy } from 'vitest-mock-extended'
 
-const service: Service | MockProxy<Service> = getService();
+const service: Service | MockProxy<Service> = getService()
 if (isMockObject(service)) {
-    service.request.mockReturnValue("mocked response");
+  service.request.mockReturnValue('mocked response')
 }
 ```
 
 An example would be
+
 ```ts
 // Mock a module
 // @/libs/example.mock.ts
@@ -269,24 +272,24 @@ test("send notification", () => {
 Custom matchers can be written using a `MatcherCreator`
 
 ```ts
-import { MatcherCreator, Matcher } from 'vitest-mock-extended';
+import { MatcherCreator, Matcher } from 'vitest-mock-extended'
 
 // expectedValue is optional
 export const myMatcher: MatcherCreator<MyType> = (expectedValue) =>
-    new Matcher((actualValue) => {
-        return expectedValue === actualValue && actualValue.isSpecial;
-    });
+  new Matcher((actualValue) => {
+    return expectedValue === actualValue && actualValue.isSpecial
+  })
 ```
 
 By default, the expected value and actual value are the same type. In the case where you need to type the expected value
 differently than the actual value, you can use the optional 2 generic parameter:
 
 ```ts
-import { MatcherCreator, Matcher } from 'vitest-mock-extended';
+import { MatcherCreator, Matcher } from 'vitest-mock-extended'
 
 // expectedValue is optional
 export const myMatcher: MatcherCreator<string[], string> = (expectedValue) =>
-    new Matcher((actualValue) => {
-        return actualValue.includes(expectedValue);
-    });
+  new Matcher((actualValue) => {
+    return actualValue.includes(expectedValue)
+  })
 ```
