@@ -43,6 +43,7 @@
     "devDependencies": {
         "@biomejs/biome": "2.6.6",
         "@vitest/coverage-v8": "5.1.0",
+        "fast-check": "4.11.0",
         "rolldown": "1.2.15",
         "rolldown-plugin-dts": "0.28.8",
         "typescript": "7.0.2",
