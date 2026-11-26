@@ -15,6 +15,8 @@ const DEFAULT_CONFIG: GlobalConfig = {
   ignoreProps: ['then'],
 }
 
+const initializedMockProxies = new WeakSet<object>()
+
 let GLOBAL_CONFIG = DEFAULT_CONFIG
 
 const VitestMockExtended = {
@@ -74,7 +76,7 @@ const mockClear = (mock: MockProxy<any>) => {
       continue
     }
 
-    if (value._isMockObject) {
+    if (value._isMockObject || initializedMockProxies.has(value)) {
       mockClear(value)
     }
 
@@ -84,7 +86,7 @@ const mockClear = (mock: MockProxy<any>) => {
   }
 
   // This is a catch for if they pass in a vi.fn()
-  if (!mock._isMockObject) {
+  if (!mock._isMockObject && !initializedMockProxies.has(mock)) {
     return mock.mockClear()
   }
 }
@@ -96,7 +98,7 @@ const mockReset = (mock: MockProxy<any>) => {
       continue
     }
 
-    if (mock[key]._isMockObject) {
+    if (mock[key]._isMockObject || initializedMockProxies.has(mock[key])) {
       mockReset(mock[key])
     }
     if (mock[key]._isMockFunction) {
@@ -107,7 +109,7 @@ const mockReset = (mock: MockProxy<any>) => {
   // This is a catch for if they pass in a vi.fn()
   // Worst case, we will create a vi.fn() (since this is a proxy)
   // below in the get and call mockReset on it
-  if (!mock._isMockObject) {
+  if (!mock._isMockObject && !initializedMockProxies.has(mock)) {
     return mock.mockReset()
   }
 }
@@ -138,6 +140,8 @@ const isAssignable = (obj: object, name: string): boolean => {
 const overrideMockImp = (obj: DeepPartial<any>, opts?: MockOpts) => {
   // biome-ignore lint/suspicious/noExplicitAny: This is necessary to support any matcher that has an asymmetricMatch function, not just our own Matcher class.
   const proxy = new Proxy<MockProxy<any>>(obj, handler(opts))
+  initializedMockProxies.add(proxy)
+
   for (const name of Object.keys(obj)) {
     const value = obj[name]
     // Only nested objects need to be replaced (by a mock proxy). Objects that cannot be extended (e.g. frozen) are kept
