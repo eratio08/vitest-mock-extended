@@ -85,13 +85,40 @@ describe('property-based mock tests', () => {
     )
   })
 
-  it.fails('resets implementations inside initialized nested mocks', () => {
+  it('resets implementations inside initialized nested mocks', () => {
     const mocked = mockDeep<{ service: { lookup: () => string } }>({ service: {} })
     mocked.service.lookup.mockReturnValue('configured')
 
     mockReset(mocked)
 
     expect(mocked.service.lookup()).toBeUndefined()
+  })
+
+  it('resets mocks inside initialized shallow mocks without adding properties', () => {
+    const service = { lookup: vi.fn<() => string>().mockReturnValue('configured'), name: 'service' }
+    const mocked = mock<{ service: { lookup: () => string; name: string } }>({ service })
+
+    expect(mocked.service.lookup()).toBe('configured')
+    mockReset(mocked)
+
+    expect(service.lookup.mock.calls).toEqual([])
+    expect(mocked.service.lookup()).toBeUndefined()
+    expect(service.name).toBe('service')
+    expect(Object.keys(service)).toEqual(['lookup', 'name'])
+  })
+
+  it('clears calls inside initialized nested mocks without removing behavior', () => {
+    const mocked = mockDeep<{ service: { api: { lookup: (key: string) => string }; name: string } }>({
+      service: { api: {}, name: 'service' },
+    })
+    mocked.service.api.lookup.calledWith('key').mockReturnValue('result')
+
+    expect(mocked.service.api.lookup('key')).toBe('result')
+    mockClear(mocked)
+
+    expect(mocked.service.api.lookup.mock.calls).toEqual([])
+    expect(mocked.service.api.lookup('key')).toBe('result')
+    expect(mocked.service.name).toBe('service')
   })
 
   it('provides callable stubs and preserves assigned values', () => {
